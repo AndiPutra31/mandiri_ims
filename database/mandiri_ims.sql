@@ -11,7 +11,7 @@
  Target Server Version : 100125
  File Encoding         : 65001
 
- Date: 08/11/2020 19:55:13
+ Date: 13/11/2020 01:05:59
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `m_aset`  (
   `last_update_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `qty_aset` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`aset_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for m_aset_hist
@@ -50,10 +50,11 @@ CREATE TABLE `m_aset_hist`  (
   `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `last_update_date` datetime(0) NULL DEFAULT NULL,
   `last_update_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `qty_aset` int(11) NULL DEFAULT NULL,
   `action` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `changedate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`hist_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for m_user
@@ -88,7 +89,7 @@ CREATE TABLE `t_aset_keluar`  (
   `last_update_date` datetime(0) NULL DEFAULT NULL,
   `last_update_by` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`t_aset_keluar_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for t_aset_masuk
@@ -104,7 +105,7 @@ CREATE TABLE `t_aset_masuk`  (
   `last_update_date` datetime(0) NULL DEFAULT NULL,
   `last_update_by` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`t_aset_masuk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for t_report
@@ -134,6 +135,7 @@ CREATE TRIGGER `before_aset_update` BEFORE UPDATE ON `m_aset` FOR EACH ROW INSER
 		 created_by=OLD. created_by,
 		 last_update_date=OLD. last_update_date,
 		 last_update_by=OLD. last_update_by,
+		 qty_aset=OLD. qty_aset,
      changedate = NOW()
 ;;
 delimiter ;
@@ -154,6 +156,7 @@ CREATE TRIGGER `before_aset_delete` BEFORE DELETE ON `m_aset` FOR EACH ROW INSER
 		 created_by=OLD. created_by,
 		 last_update_date=OLD. last_update_date,
 		 last_update_by=OLD. last_update_by,
+		 qty_aset=OLD. qty_aset,
      changedate = NOW()
 ;;
 delimiter ;
