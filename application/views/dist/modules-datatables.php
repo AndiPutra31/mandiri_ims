@@ -6,224 +6,43 @@ $this->load->view('dist/_partials/header');
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>DataTables</h1>
+            <h1>List Users</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-              <div class="breadcrumb-item"><a href="#">Modules</a></div>
-              <div class="breadcrumb-item">DataTables</div>
+              <div class="breadcrumb-item"><a href="#">Master</a></div>
+              <div class="breadcrumb-item">List Users</div>
             </div>
           </div>
 
           <div class="section-body">
-            <h2 class="section-title">DataTables</h2>
+            <h2 class="section-title">List Users</h2>
             <p class="section-lead">
-              We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
+              Daftar user yang telah terdaftar pada sistem
             </p>
-
             <div class="row">
               <div class="col-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h4>Basic DataTables</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped" id="table-1">
-                        <thead>                                 
-                          <tr>
-                            <th class="text-center">
-                              #
-                            </th>
-                            <th>Task Name</th>
-                            <th>Progress</th>
-                            <th>Members</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>                                 
-                          <tr>
-                            <td>
-                              1
-                            </td>
-                            <td>Create a mobile app</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                <div class="progress-bar bg-success" data-width="100%"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                            </td>
-                            <td>2018-01-20</td>
-                            <td><div class="badge badge-success">Completed</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              2
-                            </td>
-                            <td>Redesign homepage</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="0%">
-                                <div class="progress-bar" data-width="0"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Nur Alpiana">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-3.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hariono Yusup">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Bagus Dwi Cahya">
-                            </td>
-                            <td>2018-04-10</td>
-                            <td><div class="badge badge-info">Todo</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              3
-                            </td>
-                            <td>Backup database</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                                <div class="progress-bar bg-warning" data-width="70%"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hasan Basri">
-                            </td>
-                            <td>2018-01-29</td>
-                            <td><div class="badge badge-warning">In Progress</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              4
-                            </td>
-                            <td>Input data</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                <div class="progress-bar bg-success" data-width="100%"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Isnap Kiswandi">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Yudi Nawawi">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Khaerul Anwar">
-                            </td>
-                            <td>2018-01-16</td>
-                            <td><div class="badge badge-success">Completed</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4>Advanced Table</h4>
-                  </div>
+                  <!-- <div class="card-header"> -->
+                    <!-- <h4>Advanced Table</h4> -->
+                  <!-- </div> -->
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-striped" id="table-2">
                         <thead>
                           <tr>
-                            <th class="text-center">
-                              <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                              </div>
-                            </th>
-                            <th>Task Name</th>
-                            <th>Progress</th>
-                            <th>Members</th>
-                            <th>Due Date</th>
+                            <th>Username</th>
+                            <th>Nama Pegawai</th>
+                            <th>NIP</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td>
-                              <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
-                                <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                              </div>
-                            </td>
-                            <td>Create a mobile app</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                <div class="progress-bar bg-success" data-width="100%"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                            </td>
-                            <td>2018-01-20</td>
-                            <td><div class="badge badge-success">Completed</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-2">
-                                <label for="checkbox-2" class="custom-control-label">&nbsp;</label>
-                              </div>
-                            </td>
-                            <td>Redesign homepage</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="0%">
-                                <div class="progress-bar" data-width="0"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Nur Alpiana">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-3.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hariono Yusup">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Bagus Dwi Cahya">
-                            </td>
-                            <td>2018-04-10</td>
-                            <td><div class="badge badge-info">Todo</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-3">
-                                <label for="checkbox-3" class="custom-control-label">&nbsp;</label>
-                              </div>
-                            </td>
-                            <td>Backup database</td>
-                            <td class="align-middle">
-                              <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                                <div class="progress-bar bg-warning" data-width="70%"></div>
-                              </div>
-                            </td>
-                            <td>
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
-                              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hasan Basri">
-                            </td>
-                            <td>2018-01-29</td>
-                            <td><div class="badge badge-warning">In Progress</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-4">
-                                <label for="checkbox-4" class="custom-control-label">&nbsp;</label>
-                              </div>
-                            </td>
                             <td>Input data</td>
                             <td class="align-middle">
                               <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                <div class="progress-bar bg-success" data-width="100%"></div>
+                                <div class="progress-bar bg-success" data-width="100"></div>
                               </div>
                             </td>
                             <td>
@@ -232,9 +51,8 @@ $this->load->view('dist/_partials/header');
                               <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Yudi Nawawi">
                               <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Khaerul Anwar">
                             </td>
-                            <td>2018-01-16</td>
                             <td><div class="badge badge-success">Completed</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td><button class="btn btn-primary" id='detailBtn'>Detail</button></td>
                           </tr>
                         </tbody>
                       </table>
@@ -245,5 +63,174 @@ $this->load->view('dist/_partials/header');
             </div>
           </div>
         </section>
+        <!-- Modal Goes Here -->
+        <div class="modal" style="overflow-y: auto;" tabindex="-1" role="dialog" id="userModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id ="modal_title"></h5>
+                <button type="button" class="close" id='closeModal'  data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label>Username</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-user"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                      </div>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" name="password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Nama Pegawai</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-user"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nama Pegawai" name="pegawai_nama" id = "pegawai_nama">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>NIP</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-id-card"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NIP" name="nip" id = "nip">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="aktif" value="1" checked>
+                        <label class="form-check-label" for="aktif">Aktif</label>
+                      </div>  
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-8">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="nonAktif" value="0">
+                        <label class="form-check-label" for="nonAktif">Non Aktif</label>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Role</label>
+                  <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="admin" value="1" checked>
+                        <label class="form-check-label" for="admin">Admin</label>
+                      </div>  
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-8">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="user" value="0">
+                        <label class="form-check-label" for="user">User</label>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-warning" id='BtnClose'>Cancel</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+             // $('#userTable').DataTable({
+             //    'processing': true,
+             //    'serverSide': true,
+             //    'serverMethod': 'post',
+             //    'ajax': {
+             //        'url':'<?php echo base_url() ?>user_controller/list_user'
+             //    },
+             //    'columns': [
+             //       { data: 'user_id' },
+             //       { data: 'user_name' },
+             //       { data: 'passwd' },
+             //       { data: 'pegawai_nama' },
+             //       { data: 'nip' },
+             //       { data: 'status' },
+             //       { data: 'role' },
+
+             //    ]
+             // });
+
+             //get selected table row
+             var table = $('#table-2').DataTable();
+ 
+            $('#table-2 tbody').on( 'click', 'tr', function () {
+                var data = table.row( this ).data()
+                console.log( data[2] );
+            } );
+          });
+        </script>
+        <script>
+        var myHeader = document.getElementById("modal_title");
+        // Get the modal
+        var modal = document.getElementById("userModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("detailBtn");
+        // var addBtn = document.getElementById("addBtn");
+
+        // Get the button  that closes the modal
+        var close = document.getElementById("BtnClose");
+        var closeModal = document.getElementById("closeModal");
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          myHeader.innerText = "Update Data User";
+          modal.style.display = "block";
+        }
+
+        //  addBtn.onclick = function() {
+        //   myHeader.innerText = "Add New User";
+        //   modal.style.display = "block";
+
+        // }
+
+        // When the user clicks close, close the modal
+        close.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        closeModal.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+        </script>
       </div>
 <?php $this->load->view('dist/_partials/footer'); ?>
