@@ -27,18 +27,24 @@ $this->load->view('dist/_partials/header');
                   <!-- </div> -->
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped" id="table-2">
+                      <button class="btn btn-success" id='addBtn'>+ Add New User</button>
+                      <table class="table table-striped" id="hesoyam">
                         <thead>
                           <tr>
+                            <th>Userid</th>
                             <th>Username</th>
-                            <th>Nama Pegawai</th>
                             <th>NIP</th>
+                            <th>Nama Pegawai</th>
+                            <th>Password</th>
+                            <th>Roles</th>
+                            <th>Status_id</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <!-- <tbody>
                           <tr>
+                            <td hidden>1</td>
                             <td>Input data</td>
                             <td class="align-middle">
                               <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
@@ -54,7 +60,7 @@ $this->load->view('dist/_partials/header');
                             <td><div class="badge badge-success">Completed</div></td>
                             <td><button class="btn btn-primary" id='detailBtn'>Detail</button></td>
                           </tr>
-                        </tbody>
+                        </tbody> -->
                       </table>
                     </div>
                   </div>
@@ -73,6 +79,7 @@ $this->load->view('dist/_partials/header');
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+              <form id = 'formUser'>
               <div class="modal-body">
                 <div class="form-group">
                   <label>Username</label>
@@ -93,7 +100,7 @@ $this->load->view('dist/_partials/header');
                         <i class="fas fa-lock"></i>
                       </div>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password" name="password">
+                    <input type="password" class="form-control" placeholder="Password" name="password" id="password">
                   </div>
                 </div>
                 <div class="form-group">
@@ -115,7 +122,7 @@ $this->load->view('dist/_partials/header');
                         <i class="fas fa-id-card"></i>
                       </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="NIP" name="nip" id = "nip">
+                    <input type="text" class="form-control" placeholder="NIP" name="nip" id = "nip"> 
                   </div>
                 </div>
                 <div class="form-group">
@@ -140,7 +147,7 @@ $this->load->view('dist/_partials/header');
                   <div class="row">
                     <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="role" id="admin" value="1" checked>
+                        <input class="form-check-input" type="radio" name="role" id="admin" value="1" checked> 
                         <label class="form-check-label" for="admin">Admin</label>
                       </div>  
                     </div>
@@ -153,42 +160,99 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </div>
               </div>
+            </form>
               <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-warning" id='BtnClose'>Cancel</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="BtnSave">Save changes</button>
               </div>
             </div>
           </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript">
+          var type = 'a';
           $(document).ready(function(){
-             // $('#userTable').DataTable({
-             //    'processing': true,
-             //    'serverSide': true,
-             //    'serverMethod': 'post',
-             //    'ajax': {
-             //        'url':'<?php echo base_url() ?>user_controller/list_user'
-             //    },
-             //    'columns': [
-             //       { data: 'user_id' },
-             //       { data: 'user_name' },
-             //       { data: 'passwd' },
-             //       { data: 'pegawai_nama' },
-             //       { data: 'nip' },
-             //       { data: 'status' },
-             //       { data: 'role' },
-
-             //    ]
-             // });
-
+            
              //get selected table row
-             var table = $('#table-2').DataTable();
+             var table = $('#hesoyam').DataTable({
+              "processing" :true,
+              "serverSide" : true,
+              "order" : [],
+              "ajax" : {
+                url : "<?php echo base_url().'user_controller/getData'; ?>",
+                type : "POST"
+              },
+              "columnDefs": [
+                  {
+                      "targets": [ 0,4,5,6 ],
+                      "visible": false,
+                      "searchable": false
+                  }
+              ]
+             });
+
+            $("#BtnSave").click(function()
+              {       
+                var username = document.getElementsByName("username")[0];
+                var passwd = document.getElementsByName("password")[0];
+                var pegawai_nama = document.getElementsByName("pegawai_nama")[0];
+                var nip = document.getElementsByName("nip")[0];
+                var status = document.getElementsByName("status")[0];
+                var role = document.getElementsByName("role")[0];
+
+               $.ajax({
+                   type: "POST",
+                   url: "<?php echo base_url();?>user_controller/save_trans", 
+                   data: {
+                      username      : username.value, 
+                      passwd        : passwd.value,
+                      pegawai_nama  : pegawai_nama.value,
+                      nip           : nip.value,
+                      status        : status.value,
+                      role          : role.value,
+                      type          : type
+                   },
+                   dataType: "text",  
+                   cache:false,
+                   success: 
+                        function(response){
+                          console.log(response);
+                          var data = JSON.parse(response);
+                          console.log(data.message);
+
+                          if(data.status == 'success')
+                          {
+                            modal.style.display = "none";  
+                          }
+                          $("#formUser")[0].reset();
+                          toastr[data.status](data.message)
+
+                          toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                          }
+                        }
+                    });// you have missed this bracket
+               return false;
+             });
  
-            $('#table-2 tbody').on( 'click', 'tr', function () {
-                var data = table.row( this ).data()
-                console.log( data[2] );
-            } );
+            // $('#userTable tbody').on( 'click', 'tr', function () {
+            //     var data = table.row( this ).data()
+            //     console.log( data[2] );
+            // } );
           });
         </script>
         <script>
@@ -197,24 +261,29 @@ $this->load->view('dist/_partials/header');
         var modal = document.getElementById("userModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("detailBtn");
-        // var addBtn = document.getElementById("addBtn");
+        // var btn = document.getElementById("detailBtn");
+        var addBtn = document.getElementById("addBtn");
 
         // Get the button  that closes the modal
         var close = document.getElementById("BtnClose");
         var closeModal = document.getElementById("closeModal");
 
+
         // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-          myHeader.innerText = "Update Data User";
-          modal.style.display = "block";
-        }
-
-        //  addBtn.onclick = function() {
-        //   myHeader.innerText = "Add New User";
+        // btn.onclick = function() {
+        //   myHeader.innerText = "Update Data User";
+        //   $("#formUser")[0].reset();
         //   modal.style.display = "block";
-
+        //   type = "update"
         // }
+
+         addBtn.onclick = function() {
+          myHeader.innerText = "Add New User";
+          modal.style.display = "block";
+          $("#formUser")[0].reset();
+          type = "insert";
+
+        }
 
         // When the user clicks close, close the modal
         close.onclick = function() {

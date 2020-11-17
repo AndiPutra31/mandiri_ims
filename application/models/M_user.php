@@ -3,7 +3,7 @@
 
 class M_user extends CI_Model{
 
-
+	var $column = array(null,"user_name","user_pass", "pegawai_nama" , "nip","role","status",null);
 	public function login_act($data)
 	{
 		extract($data);
@@ -19,46 +19,76 @@ class M_user extends CI_Model{
 			$_SESSION['SESSION_USERNAME'] = $row->pegawai_nama;
 			$flag = 1;
 		}
-
+		// var_dump($_SESSION);
+		// exit();
+			
 		return $flag;
+
+	}
+
+	public function test()
+	{
+			$query = $this->db->query("SELECT 1
+				  from m_user 
+				  where user_name ='admin' and lower(pegawai_nama) = 'a' and nip = 123 and status = 1 ");
+			$result = $query->result_array();
+			// echo $result->flag.' ';
+				var_dump($result);
+			if (count($result))
+			{
+				echo 'yah';
+			}
+			else
+			{
+				echo 'yeay';
+			}
 
 	}
 
 	public function save_trans($data)
 	{
 		extract($data);
-		if($type == 'insert')
+		if(strtolower($type) == 'insert')
 		{
-			$query = "SELECT 1
+			
+			$query = $this->db->query("SELECT 1
 				  from m_user 
-				  where user_name ='".$user_name."' and lower(pegawai_nama) = '".$pegawai_nama."' and nip = ".$nip." and status = 1 ";
-			$this->db->query($query);
+				  where user_name ='".$username."' and lower(pegawai_nama) = '".$pegawai_nama."' and nip = ".$nip." and status = 1 ");
 			$result = $query->result_array();
-			$nbrows = $result->num_rows();
-			$status = FALSE;
-			if($nbrows)
+
+			if(count($result) < 1)
 			{
 				$this->db->trans_begin();
 				$param = array(
-						'user_name' => $user_name,
-						'user_pass' => md5($user_pass),
+						'user_name' => $username,
+						'user_pass' => md5($passwd),
 						'pegawai_nama' => $pegawai_nama,
 						'nip' => $nip,
 						'role' => $role,
-						'created_date' => $_SESSION[SESSION_USERID],
+						'status' =>$status,
+						'created_date' => $_SESSION['SESSION_USERID'],
 						'created_by' => date("Y-m-d H:i:s") 				
 					);
 				$flag = 1;
 				$this->db->insert('m_user', $param);
-				$status = $this->db->trans_status();
-				if ($status === TRUE)
+				$status_trans = $this->db->trans_status();
+				if ($status_trans === TRUE)
 				{
+					$status_trans = 'success';
+					$message = 'Data Berhasil dibuat';
 					$this->db->trans_commit();
 				}
 				else
 				{
+					$status_trans = 'error';
+					$message = 'Data Gagal dibuat';
 					$this->db->trans_rollback();
 				}
+			}
+			else
+			{
+				$message = 'Data sudah ada di database';
+				$status_trans = 'warning';
 			}
 		}
 		elseif($type == 'update')
@@ -71,7 +101,7 @@ class M_user extends CI_Model{
 						'nip' => $nip,
 						'role' => $role,
 						'status' => $status,
-						'last_update_date' => $_SESSION[SESSION_USERID],
+						'last_update_date' => $_SESSION['SESSION_USERID'],
 						'last_update_by' => date("Y-m-d H:i:s") 				
 					);
 			$this->db->set($param);
@@ -81,30 +111,79 @@ class M_user extends CI_Model{
 			if ($status === TRUE)
 			{
 				$this->db->trans_commit();
+				$status_trans = 'success';
+				$message = 'Data Berhasil diubah';
 			}
 			else
 			{
+				$status_trans = 'error';
+				$message = 'Data Gagal diubah';
+
 				$this->db->trans_rollback();
 			}
 
 		}
-		
-		
-		return $status;
+		$result = array(
+			'status' => $status_trans,
+			'message' => $message
+		);
+		// var_dump($result);
+		return $result;
 	}
 
-	public function get_data($user_id)
+	public function create_query()
 	{
-		
-		$query = "SELECT user_name,passwd, pegawai_nama , nip,role,status from m_user";
-		if($user_id <> '' && $user_id > 0)
-		{
-			$query .= " where user_id =".$user_id;
-		}
-		$this->db->query($query);
-		$result = $query->result_array();
 
-		return $result;
+		$this->db->select("user_id,user_name,user_pass, pegawai_nama , nip,role,status ");
+		$this->db->from('m_user');
+		if(isset($_POST['search']['value']))
+		{
+			$this->db->like('lower(user_name)',strtolower($_POST['search']['value']));
+			$this->db->or_like('lower(pegawai_nama)',strtolower($_POST['search']['value']));
+			if(is_numeric($_POST['search']['value']))
+			{
+				$this->db->or_like('nip',intval($_POST['search']['value']));
+			}
+
+			if(isset($_POST["order"]))
+			{
+				$this->db->order_by(
+					$this->column($_POST["order"]['0']["column"]),
+					$_POST["order"]['0']["dir"]);
+			}
+			else
+			{
+				$this->db->order_by("user_id","ASC");
+			}
+		}
+	}
+
+	public function get_data()
+	{
+		$this->create_query();
+		if($_POST["length"] <> -1)
+		{
+			$this->db->limit($_POST["length"],$_POST["start"]);
+			// $this->db->limit(10,0);
+
+		}
+		$result = $this->db->get();
+		return $result->result();
+	}
+
+	//function to get numbers of filtered records
+	public function filterData()
+	{
+		$this->create_query();
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_all_data()
+	{
+		$this->db->select('*');
+		$this->db->from('m_user');
+		return $this->db->count_all_results();
 	}
 
 }

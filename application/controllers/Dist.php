@@ -3,11 +3,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dist extends CI_Controller {
 
+	function __construct(){
+		parent::__construct();
+		session_start();
+	}
+
 	public function index() {
-		$data = array(
-			'title' => "Ecommerce Dashboard"
-		);
-		$this->load->view('dist/index', $data);
+		if(!empty($_SESSION))
+		{
+			if($_SESSION['SESSION_USERID'])
+			{
+				if($_SESSION['SESSION_USERROLE'] ==1)
+				{
+					$data = array(
+						'title' => "Ecommerce Dashboard"
+					);
+					$this->load->view('dist/index', $data);
+				}
+				else
+				{
+					$data = array(
+						'title' => "Asset Inventory In",
+						'type' => "in"
+					);
+					$this->load->view('dist/form_in', $data);
+				}
+			}
+		}
+		else
+		{
+			$data = array(
+				'title' => "Login",
+			);
+			$this->load->view('dist/auth-login', $data);
+
+		}
 	}
 
 	public function index_0() {

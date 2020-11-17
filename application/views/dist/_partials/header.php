@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<?php header('Access-Control-Allow-Origin : *'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title><?php echo $title; ?> &mdash; Stisla</title>
-
   <!-- General CSS Files -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/fontawesome/css/all.min.css">
@@ -15,6 +15,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+
+  <!-- toastr libraries -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/toastr/toastr.min.css">
+
 
   <!-- CSS Libraries -->
 <?php
@@ -87,7 +91,10 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/weather-icon/css/weather-icons.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/weather-icon/css/weather-icons-wind.min.css">
 <?php
-}elseif ($this->uri->segment(2) == "auth_login") { ?>
+}elseif (
+  // $this->uri->segment(2) == "auth_login"
+  empty($_SESSION)
+) { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap-social/bootstrap-social.css">
 <?php
 }elseif ($this->uri->segment(2) == "auth_register") { ?>
@@ -136,7 +143,7 @@ if ($this->uri->segment(2) == "layout_transparent") {
 }elseif ($this->uri->segment(2) == "layout_top_navigation") {
   $this->load->view('dist/_partials/layout-3');
   $this->load->view('dist/_partials/navbar');
-}elseif ($this->uri->segment(2) != "auth_login" && $this->uri->segment(2) != "auth_forgot_password"&& $this->uri->segment(2) != "auth_register" && $this->uri->segment(2) != "auth_reset_password" && $this->uri->segment(2) != "errors_503" && $this->uri->segment(2) != "errors_403" && $this->uri->segment(2) != "errors_404" && $this->uri->segment(2) != "errors_500" && $this->uri->segment(2) != "utilities_contact" && $this->uri->segment(2) != "utilities_subscribe") {
+}elseif (!empty($_SESSION) && ($this->uri->segment(2) != "auth_forgot_password"&& $this->uri->segment(2) != "auth_register" && $this->uri->segment(2) != "auth_reset_password" && $this->uri->segment(2) != "errors_503" && $this->uri->segment(2) != "errors_403" && $this->uri->segment(2) != "errors_404" && $this->uri->segment(2) != "errors_500" && $this->uri->segment(2) != "utilities_contact" && $this->uri->segment(2) != "utilities_subscribe")) {
   $this->load->view('dist/_partials/layout');
   $this->load->view('dist/_partials/sidebar');
 }

@@ -35,13 +35,13 @@ class M_aset_trans extends CI_Model{
 				'aset_id' => $kode_aset,
 				'aset_qty' => $qty,
 				'created_date' => date("Y-m-d H:i:s"),
-				'created_by' => 1,
+				'created_by' => $created_by,
 			);
 		$flag = 1;
 		$this->db->insert($table, $param);
 		if ($this->db->trans_status() === TRUE)
 		{
-				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = 1 WHERE kode_aset = ".$kode_aset);
+				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = ".$created_by." WHERE kode_aset = ".$kode_aset);
 				if ($this->db->trans_status() === FALSE)
 				{
 					$this->db->trans_rollback();

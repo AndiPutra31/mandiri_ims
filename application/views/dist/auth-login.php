@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $this->load->view('dist/_partials/header');
 ?>
 <body>
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap-social/bootstrap-social.css">
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -14,7 +15,6 @@ $this->load->view('dist/_partials/header');
 
             <div class="card card-primary">
               <div class="card-header"><h4>Login</h4></div>
-
               <div class="card-body">
                 <form method="POST" action="#" class="needs-validation" novalidate="">
                   <div class="form-group">
@@ -73,7 +73,8 @@ $(document).ready(function(){
 });
 </script> -->
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+ <script src="<?php echo base_url(); ?>assets/modules/jquery.min.js"></script>
   <script type='text/javascript'>
   $(document).ready(function(){   
 
@@ -90,6 +91,8 @@ $(document).ready(function(){
          cache:false,
          success: 
               function(data){
+                // console.log('1211');
+                // console.log(data);
                 window.location.href = "<?php echo base_url();?>"; //as a debugging message.
               }
           });// you have missed this bracket
