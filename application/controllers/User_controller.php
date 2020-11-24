@@ -30,26 +30,17 @@ class User_controller extends CI_Controller {
 
 	}
 	
-	public function v_create_user() {
-		$type = $_POST['type'];
-		if($type == 'update')
-		{
-			$data = $this->m_user->get_data($_POST['user_id']);
-		}
-		else
-		{
-			$data = array();
-		}
-		$this->load->view('dist/create_user',$data);
+	public function index() {
+		$data = array(
+			'title' => "Master User"
+		);
+		$this->load->view('dist/users', $data);
 	}
-	
-	public function test()
-	{
-		$this->m_user->test();
-	}
+
 	public function save_trans()
 	{
 		$data = array(
+			"user_id"      => $this->input->post('user_id'), 
 			"username"      => $this->input->post('username'), 
 	        "passwd"        => $this->input->post('passwd'),
 	        "pegawai_nama"  => $this->input->post('pegawai_nama'),
@@ -70,23 +61,30 @@ class User_controller extends CI_Controller {
 		foreach ($fetch_data as $row) 
 		{
 			$array = array();
-			$array[] = $row->user_id;
-			$array[] = $row->user_name;
-			$array[] = $row->nip;
-			$array[] = $row->pegawai_nama ;
-			$array[] = $row->user_pass;
-			$array[] = $row->role;
-			$array[] = $row->status;
-			if($row->status == 1)
-			{
-				$array[] = '<div class="badge badge-success">Aktif</div>';
-			}
-			else
-			{
-			    $array[] = '<div class="badge badge-info">Non Aktif</div>';
+			$array['user_id'] = $row->user_id;
+			$array['user_name'] = $row->user_name;
+			$array['nip'] = $row->nip;
+			$array['pegawai_nama'] = $row->pegawai_nama ;
+			$array['user_pass'] = $row->user_pass;
+			$array['role'] = $row->role;
+			$array['status'] = $row->status;
+			// $array[] = $row->user_id;
+			// $array[] = $row->user_name;
+			// $array[] = $row->nip;
+			// $array[] = $row->pegawai_nama ;
+			// $array[] = $row->user_pass;
+			// $array[] = $row->role;
+			// $array[] = $row->status;
+			// if($row->status == 1)
+			// {
+			// 	$array[] = '<div class="badge badge-success">Aktif</div>';
+			// }
+			// else
+			// {
+			//     $array[] = '<div class="badge badge-info">Non Aktif</div>';
 
-			}
-			$array[] = '<button class="btn btn-primary" id="detailBtn">Detail</button>';
+			// }
+			// $array[] = '<button class="btn btn-primary" id="detailBtn" onclick="update()">Detail</button> <script type="text/javascript"> </script>';
 			$data[] = $array;
 		}
 		//total records
@@ -97,10 +95,10 @@ class User_controller extends CI_Controller {
 
 
 		$result = array(
-			// 'draw' => intval($_POST["draw"]),
-			'draw' => intval('1'),
+			'draw' => intval($_POST["draw"]),
+			// 'draw' => intval('1'),
 			'recordsTotal' => $totNum,
-			'recodsFiltered' =>$filNum,
+			'recordsFiltered' =>$filNum,
 			'data' => $data
 		);
 

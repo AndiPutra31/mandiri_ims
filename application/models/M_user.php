@@ -3,7 +3,6 @@
 
 class M_user extends CI_Model{
 
-	var $column = array(null,"user_name","user_pass", "pegawai_nama" , "nip","role","status",null);
 	public function login_act($data)
 	{
 		extract($data);
@@ -26,24 +25,6 @@ class M_user extends CI_Model{
 
 	}
 
-	public function test()
-	{
-			$query = $this->db->query("SELECT 1
-				  from m_user 
-				  where user_name ='admin' and lower(pegawai_nama) = 'a' and nip = 123 and status = 1 ");
-			$result = $query->result_array();
-			// echo $result->flag.' ';
-				var_dump($result);
-			if (count($result))
-			{
-				echo 'yah';
-			}
-			else
-			{
-				echo 'yeay';
-			}
-
-	}
 
 	public function save_trans($data)
 	{
@@ -95,15 +76,18 @@ class M_user extends CI_Model{
 		{
 			$this->db->trans_begin();
 			$param = array(
-						'user_name' => $user_name,
-						'user_pass' => md5($user_pass),
+						'user_name' => $username,
 						'pegawai_nama' => $pegawai_nama,
 						'nip' => $nip,
 						'role' => $role,
 						'status' => $status,
 						'last_update_date' => $_SESSION['SESSION_USERID'],
-						'last_update_by' => date("Y-m-d H:i:s") 				
+						'last_updated_by' => date("Y-m-d H:i:s") 				
 					);
+			if($passwd<>'')
+			{
+						$param['user_pass'] = md5($passwd);
+			}
 			$this->db->set($param);
 			$this->db->where('user_id', $user_id);
 			$this->db->update('m_user');
@@ -148,7 +132,7 @@ class M_user extends CI_Model{
 			if(isset($_POST["order"]))
 			{
 				$this->db->order_by(
-					$this->column($_POST["order"]['0']["column"]),
+					$_POST["order"]['0']["column"],
 					$_POST["order"]['0']["dir"]);
 			}
 			else

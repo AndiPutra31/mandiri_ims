@@ -9,17 +9,17 @@ class Asset_trans extends CI_Controller {
 		$this->load->model('m_aset_trans');
 	}
 
-	public function index() {
+	public function input() {
 		$data = array(
-			'title' => "Asset Inventory In",
+			'title' => "Aset Masuk",
 			'type' => "in"
 		);
 		$this->load->view('dist/form_in', $data);
 	}
 
-	public function index2() {
+	public function output() {
 		$data = array(
-			'title' => "Asset Inventory Out",
+			'title' => "Aset Keluar",
 			'type' => "out"
 		);
 		$this->load->view('dist/form_in', $data);
@@ -30,11 +30,10 @@ class Asset_trans extends CI_Controller {
 		$data = array(
 				'trans_type' 	=> $_POST['type'],
 				'kode_aset' 	=> $_POST['kode_aset'],
-				'qty' 			=> $_POST['qty'],
-				'created_by'	=> $_SESSION['SESSION_USERID']
+				'qty' 			=> $_POST['qty']
 			);
 		$result = $this->m_aset_trans->save_trans($data);
-		echo $result;
+		echo json_encode($result);
 	}
 
 	public function trans_list() {

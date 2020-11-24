@@ -35,27 +35,38 @@ class M_aset_trans extends CI_Model{
 				'aset_id' => $kode_aset,
 				'aset_qty' => $qty,
 				'created_date' => date("Y-m-d H:i:s"),
-				'created_by' => $created_by,
+				'created_by' => $_SESSION['SESSION_USERID'],
 			);
 		$flag = 1;
 		$this->db->insert($table, $param);
 		if ($this->db->trans_status() === TRUE)
 		{
-				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = ".$created_by." WHERE kode_aset = ".$kode_aset);
+				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = ".$_SESSION['SESSION_USERID']." WHERE kode_aset = ".$kode_aset);
 				if ($this->db->trans_status() === FALSE)
 				{
 					$this->db->trans_rollback();
+					$status_trans = 'error';
+					$message = 'Transaksi Gagal';
 				}
 				else
 				{
 					$this->db->trans_commit();
+					$status_trans = 'success';
+					$message = 'Transaksi Berhasil';
 				}	
 		}
 		else
 		{
 		        $this->db->trans_rollback();
+		        $status_trans = 'error';
+				$message = 'Transaksi Gagal';
 		}
-		return 1;
+		$result = array(
+			'status' => $status_trans,
+			'message' => $message
+		);
+		// var_dump($result);
+		return $result;
 	}
 
 }

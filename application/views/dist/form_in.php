@@ -18,7 +18,7 @@ $this->load->view('dist/_partials/header');
               <div class="col-12 col-md-3 col-lg-3">
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-              <form role="form" action="<?php echo base_url() ?>asset_trans/save_trans" method="post" enctype="multipart/form-data">
+              <form id ='formInput' >
                 <div class="card">
                   
                   <div class="card-header">
@@ -39,7 +39,7 @@ $this->load->view('dist/_partials/header');
                     </div>
                     <div class="form-group">
                       <label>Aset</label>
-                      <input type="text" id="kode_aset" name="kode_aset" class="form-control">
+                      <input type="text" id="kode_aset" onchange="searchAset()" name="kode_aset" class="form-control">
                     </div>
                     <div class="form-group">
                       <label>Quantity</label>
@@ -47,12 +47,12 @@ $this->load->view('dist/_partials/header');
                     </div>
                     <div class="form-group">
                       <label>Stok Sekarang</label>
-                      <input type="number"class="form-control" readonly>
+                      <input type="number" id ='stock'class="form-control" readonly>
                     </div>
                   
                   </div>
                   <div class="card-footer text-right">
-                    <button class="btn btn-primary mr-1" type="submit">Submit</button>
+                    <button class="btn btn-primary mr-1" type="submit" id='BtnSave'>Submit</button>
                     <button class="btn btn-secondary" type="reset">Reset</button>
                   </div>
                 </div>
@@ -61,5 +61,131 @@ $this->load->view('dist/_partials/header');
             </div>
           </div>
         </section>
+        <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+        <script>
+          // var type = '';
+          function searchAset()
+            {
+              var kode_aset = document.getElementById("kode_aset");
+
+              $.ajax({
+                         type: "POST",
+                         url: "<?php echo base_url() ?>asset_controller/search", 
+                         data: {
+                            kode_aset      : kode_aset.value, 
+                         },
+                         dataType: "text",  
+                         cache:false,
+                         success: 
+                              function(response){
+                                console.log(response);
+                                var data = JSON.parse(response);
+                                // console.log(data.qty);
+                                document.getElementById("stock").value = data.qty;
+                              }
+                          });
+            }
+          $(document).ready(function(){
+            $("#BtnSave").click(function()
+                {       
+                  var kode_aset = document.getElementById("kode_aset");
+                  var qty = document.getElementById("qty");
+                  var type = document.getElementById("type");
+                  var stock = document.getElementById("stock");
+                  
+                  if(kode_aset.value != '' && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' ))
+                  {
+                  // console.log('lalala');
+                    $.ajax({
+                         type: "POST",
+                         url: "<?php echo base_url() ?>asset_trans/save_trans", 
+                         data: {
+                            kode_aset      : kode_aset.value, 
+                            qty            : qty.value,
+                            type            : type.value
+                         },
+                         dataType: "text",  
+                         cache:false,
+                         success: 
+                              function(response){
+                                console.log(response);
+                                var data = JSON.parse(response);
+                                console.log(data.message);
+                                if(data.status =='success')
+                                {
+                                  $("#formInput")[0].reset();
+                                }
+                                toastr[data.status](data.message)
+
+                                toastr.options = {
+                                  "closeButton": true,
+                                  "debug": false,
+                                  "newestOnTop": false,
+                                  "progressBar": false,
+                                  "positionClass": "toast-top-right",
+                                  "preventDuplicates": false,
+                                  "onclick": null,
+                                  "showDuration": "300",
+                                  "hideDuration": "1000",
+                                  "timeOut": "5000",
+                                  "extendedTimeOut": "1000",
+                                  "showEasing": "swing",
+                                  "hideEasing": "linear",
+                                  "showMethod": "fadeIn",
+                                  "hideMethod": "fadeOut"
+                                }
+
+                              }
+                          });
+                     
+                  }
+                  else
+                  {
+                    var message ='';
+                    if(kode_aset.value == '' || qty.value == 0 )
+                    {
+                      if(kode_aset.value == '')
+                      {
+                        message = message + 'Kode Aset'
+                      }
+
+                      if(qty.value == 0)
+                      {
+                        if(message.length > 0)
+                        {
+                          message = message+',';
+                        }
+                        message = message + 'Quantity';
+                      }
+                      message = message+' tidak boleh kosong';
+                    }
+                    else if(stock.value < qty.value)
+                    {
+                      message = 'Stok barang kurang';
+                    }
+                    toastr['warning'](message)
+
+                                toastr.options = {
+                                  "closeButton": true,
+                                  "debug": false,
+                                  "newestOnTop": false,
+                                  "progressBar": false,
+                                  "positionClass": "toast-top-right",
+                                  "preventDuplicates": false,
+                                  "onclick": null,
+                                  "showDuration": "300",
+                                  "hideDuration": "1000",
+                                  "timeOut": "5000",
+                                  "extendedTimeOut": "1000",
+                                  "showEasing": "swing",
+                                  "hideEasing": "linear",
+                                  "showMethod": "fadeIn",
+                                  "hideMethod": "fadeOut"
+                                }
+                  }
+                 return false;
+               });
+          });
+        </script>
       </div>
 <?php $this->load->view('dist/_partials/footer'); ?>
