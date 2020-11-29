@@ -76,20 +76,37 @@ class asset_controller extends CI_Controller {
 
 	public function test()
 	{
-		
-		$month = date("m",strtotime('2020-11-01'));
-		echo $month.'<br><br>';
-		$month = date('m');
-		$year = date('Y');
-		$start = mktime(0, 0, 0, $month, 1, $year);
-		$end = mktime(0, 0, 0, $month, date('t', $start), $year);
-		 // Start week
-		$start_week = date('W', $start);
-		 // End week
 		$type = 'detail';
-		$end_week = date('W', $end);
+        $params = array(
+                            'type'  => $type,
+                            'month' => 12,
+                            'year' => 2020
+                        );
+		extract($params);
+		//get week index
+		$firstDate = mktime(0, 0, 0, $month, 1, $year);
+		$lastDate = mktime(0, 0, 0, $month, date('t', $firstDate), $year);
+		// //get first and last Day of month
+		// $firstDate = date("Y-m-d", strtotime("'".$year."-".$month."-01'"));
+		// $lastDate = date("Y-m-t", strtotime("'".$year."-".$month."-01"));
+		
+		//get day
+		$firstDay = date("D",$firstDate);
+		$lastDay = date("D",$lastDate);
+
+		//get week
+		$start_week = intval(date('W', $firstDate));
+		$end_week = intval(date('W', $lastDate));
+
+		echo $lastDay."<br><br>";
+
+		if(strtolower($lastDay) <> 'sun')
+		{
+			$end_week -= 1;
+		}
+
 		$join ='';
-		echo 'start : '.$start_week." end : ".$end_week."<br>";
+		// echo 'start : '.$start_week." end : ".$end_week."<br>";
 		$select  = 'SELECT m_aset.nama_aset';
 		$index = 1;
 		for ($i=$start_week; $i <=$end_week ; $i++) { 
@@ -140,5 +157,19 @@ class asset_controller extends CI_Controller {
 		// }
 
 		// var_dump($res);
+	}
+
+	public function test2()
+	{
+
+		$params = array(
+						'bulan' => 11,
+						'tahun'	=> 2020,
+						'jenis_aset' => 1,
+						'aset_id'	=> ''
+		);
+		$result = $this->m_aset->getPemakaian($params);
+
+		var_dump($result);
 	}
 }

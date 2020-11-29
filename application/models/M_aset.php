@@ -171,21 +171,31 @@ class M_aset extends CI_Model{
 
 	}
 
-	public function getStock($type)
+	public function getStock($params)
 	{
-		// extract($params);
-
+		extract($params);
 		//get week index
-		$month = date("m",strtotime('2020-11-01'));
-		// echo $month.'<br><br>';
-		$month = date('m');
-		$year = date('Y');
-		$start = mktime(0, 0, 0, $month, 1, $year);
-		$end = mktime(0, 0, 0, $month, date('t', $start), $year);
-		 // Start week
-		$start_week = date('W', $start);
-		 // End week
-		$end_week = date('W', $end);
+		//get first and last Day of month
+		$firstDate = mktime(0, 0, 0, $month, 1, $year);
+		$lastDate = mktime(0, 0, 0, $month, date('t', $firstDate), $year);
+		// //get first and last Day of month
+		// $firstDate = date("Y-m-d", strtotime("'".$year."-".$month."-01'"));
+		// $lastDate = date("Y-m-t", strtotime("'".$year."-".$month."-01"));
+		
+		//get day
+		$firstDay = date("D",$firstDate);
+		$lastDay = date("D",$lastDate);
+
+		//get week
+		$start_week = intval(date('W', $firstDate));
+		$end_week = intval(date('W', $lastDate));
+
+
+		if(strtolower($lastDay) <> 'sun')
+		{
+			$end_week -= 1;
+		}
+
 		$join ='';
 		// echo 'start : '.$start_week." end : ".$end_week."<br>";
 		$select  = 'SELECT m_aset.nama_aset';
@@ -247,7 +257,67 @@ class M_aset extends CI_Model{
 		return array('indexMax' => $indexMax-1 , 'data' => $res);
 	}
 
+	public function getPemakaian($params)
+	{
+		extract($params);
+		$where = '';
+		if($jenis_aset<>'')
+		{
+			$where .= "AND jenis_aset = ".$jenis_aset;
+		}
+		if($aset_id)
+		{
+			$where .= "AND m_aset.aset_id = ".$aset_id;
+		}
+		
+		$query = "SELECT m_aset.nama_aset , 
+							CASE 
+								WHEN jenis_aset = 1 THEN
+									'Slip Setoran'
+								WHEN jenis_aset = 2 THEN
+									'Slip Pembayaran/multipayment'
+								WHEN jenis_aset = 3 THEN
+									'Slip Penarikan'
+								WHEN jenis_aset = 4 THEN
+									'Slip Pembayaran Kartu Kredit'
+								WHEN jenis_aset = 5 THEN
+									'Formulir walk in customer'
+								END as jenis_aset
+								, trans.created_date ,trans.type, trans.aset_qty , trans.pegawai_nama
+					FROM m_aset
+					INNER JOIN (
+							SELECT aset_id , aset_qty , tam.created_date, mu.pegawai_nama , 'Stok Masuk' as type
+							FROM t_aset_masuk tam
+							INNER JOIN m_user mu on tam.created_by = mu.user_id
+							UNION
+							SELECT aset_id , aset_qty , tak.created_date, mu.pegawai_nama , 'Stok Keluar' as type
+							FROM t_aset_keluar tak
+							INNER JOIN m_user mu on tak.created_by = mu.user_id
+							) trans on trans.aset_id = m_aset.kode_aset
+					WHERE YEAR(trans.created_date) = ".$tahun." AND MONTH(trans.created_date) = ".$bulan." ".$where."
+					order by m_aset.jenis_aset,m_aset.aset_id , trans.created_date";
 
+		// return $query;
+
+		$result = $this->db->query($query);
+
+		$nama_aset = '';
+		$jenis_aset = '';
+		$resultData = array();
+		foreach ($result->result() as $row)
+		{
+			array_push($resultData, array(
+								'jenis_aset' 	=> $row->jenis_aset,
+								'nama_aset' 	=> $row->nama_aset,
+								'tgl_trans' 	=> date("Y-m-d",strtotime($row->created_date)),
+								'type' 			=> $row->type,
+								'jumlah' 		=> $row->aset_qty,
+								'pegawai_nama' 	=> $row->pegawai_nama
+							  ));
+		}
+		return $resultData;
+
+	}
 }
 
 ?>
