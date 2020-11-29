@@ -74,4 +74,71 @@ class asset_controller extends CI_Controller {
 		echo json_encode($result);
 	}
 
+	public function test()
+	{
+		
+		$month = date("m",strtotime('2020-11-01'));
+		echo $month.'<br><br>';
+		$month = date('m');
+		$year = date('Y');
+		$start = mktime(0, 0, 0, $month, 1, $year);
+		$end = mktime(0, 0, 0, $month, date('t', $start), $year);
+		 // Start week
+		$start_week = date('W', $start);
+		 // End week
+		$type = 'detail';
+		$end_week = date('W', $end);
+		$join ='';
+		echo 'start : '.$start_week." end : ".$end_week."<br>";
+		$select  = 'SELECT m_aset.nama_aset';
+		$index = 1;
+		for ($i=$start_week; $i <=$end_week ; $i++) { 
+			if($type =='rekap')
+			{
+				$select .= ',coalesce(masuk'.$i.'.qty,0) - coalesce(keluar'.$i.'.qty,0) as qty'.$index;
+				$join .= "LEFT JOIN (select aset_id ,sum(aset_qty) as qty 
+											 from t_aset_masuk 
+											 where WEEK(created_date,1) <= ".$i."
+											 group by aset_id ) masuk".$i." on masuk".$i.".aset_id = m_aset.kode_aset
+						LEFT JOIN (select aset_id ,sum(aset_qty) as qty
+											 from t_aset_keluar 
+											 where WEEK(created_date,1) <= ".$i."
+											 group by aset_id ) keluar".$i." on keluar".$i.".aset_id = m_aset.kode_aset 
+											 ";
+			}
+			elseif ($type =='detail') 
+			{
+				$select .= ',coalesce(masuk'.$i.'.qty,0) as masuk'.$index.', coalesce(keluar'.$i.'.qty,0) as keluar'.$index;
+				$whereGroup = "group by aset_id , WEEK(created_date,1)";	
+				$join .= 'LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
+									 from t_aset_masuk 
+									 group by aset_id , WEEK(created_date,1)
+								    ) masuk'.$i.' on masuk'.$i.'.aset_id = m_aset.kode_aset and masuk'.$i.'.minggu = '.$i.'
+						LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
+									 from t_aset_keluar 
+									 group by aset_id , WEEK(created_date,1)
+								  ) keluar'.$i.' on keluar'.$i.'.aset_id = m_aset.kode_aset 
+									 and masuk'.$i.'.minggu = keluar'.$i.'.minggu
+						 ';
+			}
+			$index++; 
+		}
+		$indexMax = $index;
+		$query = $select."
+		FROM m_aset ".$join." order by m_aset.aset_id";
+		echo $query;
+		// $result = $this->db->query($query);
+		// $res = array();
+		// foreach ($result->result_array() as $row)
+		// {
+		// 	$array = array();
+		// 	$array['nama_aset'] = $row['nama_aset'];
+		// 	for ($i=1; $i <$indexMax ; $i++) { 
+		// 		$array['minggu'.$i] = $row['qty'.$i];
+		// 	}
+		// 	array_push($res, $array);
+		// }
+
+		// var_dump($res);
+	}
 }
