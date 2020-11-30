@@ -24,25 +24,29 @@
                                 'year' => 2020
                             );
             //get data for the report
+            extract($params);
+            $tanggal = "'".$year."-".$month."-01'";
             $dataReport = $this->m_aset->getStock($params);
             extract($dataReport);
 
             // var_dump($data);
             // $indexMax = 4;
+            $tanggal = $year."-".$month."-01";
             $no=0;
             $i=1;
             error_reporting(0); // AGAR ERROR MASALAH VERSI PHP TIDAK MUNCUL
-            $filename = 'Laporan Stok '.strftime('%B %Y').".pdf";
+            $filename = 'Laporan Stok '.strftime('%B %Y',strtotime($year."-".$month."-01")).".pdf";
             $maxPerPage = 4;
             if($type =='rekap')
             {
                 $pdf = new FPDF('P', 'mm','A4');
-                $title = 'Daftar Stok Formulir '.strftime('%B %Y');
+                $title = 'Daftar Stok Formulir '.strftime('%B %Y',strtotime($year."-".$month."-01"));
             }
             elseif ($type == 'detail') 
             {
                 $pdf = new FPDF('L', 'mm','A4');
-                $title = 'Laporan Stok Aset Bank '.strftime('%B %Y');
+                // $title = 'Laporan Stok Aset Bank '.$tanggal;
+                $title = 'Laporan Stok Aset Bank '.strftime('%B %Y',strtotime( $year."-".$month."-01"));
             }
             
             if($indexMax < $maxPerPage)
@@ -143,19 +147,18 @@
             $jenis_aset = '';
             $nama_aset = '';
             $flag= 0;
-            $pdf->SetFont('Arial','B',12);
             foreach ($result as $row)
             {
-                if($jenis_aset<>$row["jenis_aset"])
-                {
-                    $pdf->Ln();
-                    $pdf->Cell(25,6,'Jenis Aset',0,0,'');
-                    $pdf->Cell(10,6,':',0,0,'');
-                    $pdf->Cell(60,6,$row['jenis_aset'],0,0,'');
-                    $jenis_aset = $row['jenis_aset'];
-                    $pdf->Ln();
-                    $flag = 0;
-                }
+                // if($jenis_aset<>$row["jenis_aset"])
+                // {
+                //     $pdf->Ln();
+                //     $pdf->Cell(25,6,'Jenis Aset',0,0,'');
+                //     $pdf->Cell(10,6,':',0,0,'');
+                //     $pdf->Cell(60,6,$row['jenis_aset'],0,0,'');
+                //     $jenis_aset = $row['jenis_aset'];
+                //     $pdf->Ln();
+                //     $flag = 0;
+                // }
                 if($nama_aset <> $row['nama_aset'])
                 {
                     $flag ++;
@@ -164,12 +167,16 @@
                     {
                         $pdf->Ln();
                     }
+                    
+                    $pdf->SetFont('Arial','',12);
                     $pdf->Cell(25,6,'Nama Aset',0,0,'');
                     $pdf->Cell(10,6,':',0,0,'');
+                    $pdf->SetFont('Arial','B',12);
                     $pdf->Cell(60,6,$row['nama_aset'],0,0,'');
                     $nama_aset = $row['nama_aset'];
                     $pdf->Ln();
 
+                    $pdf->SetFont('Arial','B',10);
                     $pdf->Cell(10,6,'No',1,0,'C');
                     $pdf->Cell(50,6,'Tgl. Transaksi',1,0,'C');
                     $pdf->Cell(50,6,'Keterangan',1,0,'C');
@@ -179,6 +186,7 @@
 
                 }
                 $no++;
+                $pdf->SetFont('Arial','',10);
                 $pdf->Cell(10,6,$no,1,0,'C');
                 $pdf->Cell(50,6,$row['tgl_trans'],1,0,'C');
                 $pdf->Cell(50,6,$row['type'],1,0,'C');

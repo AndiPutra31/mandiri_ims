@@ -9,7 +9,7 @@ class asset_controller extends CI_Controller {
 		$this->load->model('m_aset');
 	}
 	
-	public function index() {
+	public function listAset() {
 		$data = array(
 			'title' => "Master Asset"
 		);

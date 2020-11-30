@@ -90,19 +90,9 @@ class M_aset extends CI_Model{
 	{
 
 		$this->db->select("aset_id, kode_aset, nama_aset , status_aset as status , qty_aset, jenis_aset as jenis_aset_id , 
-			CASE 
-			WHEN jenis_aset = 1 THEN
-				'Slip Setoran'
-			WHEN jenis_aset = 2 THEN
-				'Slip Pembayaran/<i>multipayment</i>'
-			WHEN jenis_aset = 3 THEN
-				'Slip Penarikan'
-			WHEN jenis_aset = 4 THEN
-				'Slip Pembayaran Kartu Kredit'
-			WHEN jenis_aset = 5 THEN
-				'Formulir <i> walk in customer</i>'
-			END as jenis_aset");
+			jenis_aset_name as jenis_aset");
 		$this->db->from('m_aset');
+		$this->db->join('m_jenis_aset', 'm_aset.jenis_aset = m_jenis_aset.jenis_aset_id', 'inner');
 		if(isset($_POST['search']['value']))
 		{
 			$this->db->like('lower(kode_aset)',strtolower($_POST['search']['value']));
@@ -151,7 +141,7 @@ class M_aset extends CI_Model{
 
 	public function get_quantity()
 	{
-		$this->db->select('qty_aset');
+		$this->db->select('qty_aset , aset_id');
 		$this->db->from('m_aset');
 		$this->db->where('kode_aset', $this->input->post('kode_aset'));
 		$get = $this->db->get();
@@ -160,14 +150,17 @@ class M_aset extends CI_Model{
 		if(is_null($result))
 		{
 			$qty = 0;
+			$aset_id = null;
 		}
 		else
 		{
 			$qty = $result->qty_aset;
+			$aset_id = $result->aset_id;
+
 		}
 		// echo '<br>';
 
-		return array('status' => 'success' , 'qty' => $qty);
+		return array('status' => 'success' , 'data' => array('aset_id' => $aset_id, 'qty' => $qty));
 
 	}
 
@@ -207,11 +200,11 @@ class M_aset extends CI_Model{
 				$join .= "LEFT JOIN (select aset_id ,sum(aset_qty) as qty 
 											 from t_aset_masuk 
 											 where WEEK(created_date,1) <= ".$i."
-											 group by aset_id ) masuk".$i." on masuk".$i.".aset_id = m_aset.kode_aset
+											 group by aset_id ) masuk".$i." on masuk".$i.".aset_id = m_aset.aset_id
 						LEFT JOIN (select aset_id ,sum(aset_qty) as qty
 											 from t_aset_keluar 
 											 where WEEK(created_date,1) <= ".$i."
-											 group by aset_id ) keluar".$i." on keluar".$i.".aset_id = m_aset.kode_aset 
+											 group by aset_id ) keluar".$i." on keluar".$i.".aset_id = m_aset.aset_id 
 											 ";
 			}
 			elseif ($type =='detail') 
@@ -221,11 +214,11 @@ class M_aset extends CI_Model{
 				$join .= 'LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
 									 from t_aset_masuk 
 									 group by aset_id , WEEK(created_date,1)
-								    ) masuk'.$i.' on masuk'.$i.'.aset_id = m_aset.kode_aset and masuk'.$i.'.minggu = '.$i.'
+								    ) masuk'.$i.' on masuk'.$i.'.aset_id = m_aset.aset_id and masuk'.$i.'.minggu = '.$i.'
 						LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
 									 from t_aset_keluar 
 									 group by aset_id , WEEK(created_date,1)
-								  ) keluar'.$i.' on keluar'.$i.'.aset_id = m_aset.kode_aset 
+								  ) keluar'.$i.' on keluar'.$i.'.aset_id = m_aset.aset_id 
 									 and masuk'.$i.'.minggu = keluar'.$i.'.minggu
 						 ';
 			}
@@ -293,7 +286,7 @@ class M_aset extends CI_Model{
 							SELECT aset_id , aset_qty , tak.created_date, mu.pegawai_nama , 'Stok Keluar' as type
 							FROM t_aset_keluar tak
 							INNER JOIN m_user mu on tak.created_by = mu.user_id
-							) trans on trans.aset_id = m_aset.kode_aset
+							) trans on trans.aset_id = m_aset.aset_id
 					WHERE YEAR(trans.created_date) = ".$tahun." AND MONTH(trans.created_date) = ".$bulan." ".$where."
 					order by m_aset.jenis_aset,m_aset.aset_id , trans.created_date";
 

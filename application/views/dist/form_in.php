@@ -40,6 +40,8 @@ $this->load->view('dist/_partials/header');
                     <div class="form-group">
                       <label>Aset</label>
                       <input type="text" id="kode_aset" onchange="searchAset()" name="kode_aset" class="form-control">
+                      <input type="text" id="asset_id" name="asset_id" value= "0" hidden />
+
                     </div>
                     <div class="form-group">
                       <label>Quantity</label>
@@ -79,8 +81,11 @@ $this->load->view('dist/_partials/header');
                          success: 
                               function(response){
                                 console.log(response);
-                                var data = JSON.parse(response);
-                                // console.log(data.qty);
+                                var responses = JSON.parse(response);
+                                var data = responses.data;
+                                console.log(data);
+                                console.log(data.aset_id);
+                                document.getElementById("asset_id").value = data.aset_id;
                                 document.getElementById("stock").value = data.qty;
                               }
                           });
@@ -88,19 +93,19 @@ $this->load->view('dist/_partials/header');
           $(document).ready(function(){
             $("#BtnSave").click(function()
                 {       
-                  var kode_aset = document.getElementById("kode_aset");
+                  var asset_id = document.getElementById("asset_id");
                   var qty = document.getElementById("qty");
                   var type = document.getElementById("type");
                   var stock = document.getElementById("stock");
                   
-                  if(kode_aset.value != '' && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' ))
+                  if(asset_id.value >0 && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' ))
                   {
-                  // console.log('lalala');
+                  console.log('lalala');
                     $.ajax({
                          type: "POST",
                          url: "<?php echo base_url() ?>asset_trans/save_trans", 
                          data: {
-                            kode_aset      : kode_aset.value, 
+                            aset_id      : asset_id.value, 
                             qty            : qty.value,
                             type            : type.value
                          },
@@ -116,7 +121,6 @@ $this->load->view('dist/_partials/header');
                                   $("#formInput")[0].reset();
                                 }
                                 toastr[data.status](data.message)
-
                                 toastr.options = {
                                   "closeButton": true,
                                   "debug": false,
@@ -142,14 +146,15 @@ $this->load->view('dist/_partials/header');
                   else
                   {
                     var message ='';
-                    if(kode_aset.value == '' || qty.value == 0 )
+
+                    if(kode_aset.value =='' || qty.value == 0 )
                     {
-                      if(kode_aset.value == '')
+                      if(kode_aset.value =='')
                       {
                         message = message + 'Kode Aset'
                       }
-
-                      if(qty.value == 0)
+                      
+                      else if(qty.value == 0)
                       {
                         if(message.length > 0)
                         {
@@ -158,6 +163,10 @@ $this->load->view('dist/_partials/header');
                         message = message + 'Quantity';
                       }
                       message = message+' tidak boleh kosong';
+                    }
+                    else if (asset_id.value == 0)
+                    {
+                      message = 'Kode Aset Salah';
                     }
                     else if(stock.value < qty.value)
                     {

@@ -32,7 +32,7 @@ class M_aset_trans extends CI_Model{
 
 		$this->db->trans_begin();
 		$param = array(
-				'aset_id' => $kode_aset,
+				'aset_id' => $aset_id,
 				'aset_qty' => $qty,
 				'created_date' => date("Y-m-d H:i:s"),
 				'created_by' => $_SESSION['SESSION_USERID'],
@@ -41,7 +41,7 @@ class M_aset_trans extends CI_Model{
 		$this->db->insert($table, $param);
 		if ($this->db->trans_status() === TRUE)
 		{
-				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = ".$_SESSION['SESSION_USERID']." WHERE kode_aset = ".$kode_aset);
+				$this->db->query("UPDATE m_aset SET ".$update.", last_update_date = now(), last_update_by = ".$_SESSION['SESSION_USERID']." WHERE aset_id = ".$aset_id);
 				if ($this->db->trans_status() === FALSE)
 				{
 					$this->db->trans_rollback();

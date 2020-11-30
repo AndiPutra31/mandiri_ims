@@ -29,7 +29,7 @@ class Asset_trans extends CI_Controller {
 	{
 		$data = array(
 				'trans_type' 	=> $_POST['type'],
-				'kode_aset' 	=> $_POST['kode_aset'],
+				'aset_id' 	=> $_POST['aset_id'],
 				'qty' 			=> $_POST['qty']
 			);
 		$result = $this->m_aset_trans->save_trans($data);

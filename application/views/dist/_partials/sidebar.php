@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Master</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="<?php echo base_url(); ?>user_controller/"><i class="fas fa-people"></i> <span>Master User</span></a></li>
-                <li><a class="nav-link" href="<?php echo base_url(); ?>asset_controller/"><i class="fas fa-box"></i> <span>Master Aset</span></a></li>
+                <li><a class="nav-link" href="<?php echo base_url(); ?>asset_controller/listAset"><i class="fas fa-box"></i> <span>Master Aset</span></a></li>
               </ul>
             </li>
             <li class="menu-header">Transaksi Data</li>

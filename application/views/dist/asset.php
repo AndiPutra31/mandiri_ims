@@ -87,19 +87,17 @@ $this->load->view('dist/_partials/header');
                 </div>
                 <div class="form-group">
                   <label>Jenis Aset</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
+                  <div class ='row'>
+                    <div class="input-group-prepend" style="width: 43px;margin-left: 15px">
                       <div class="input-group-text">
                         <i class="fas fa-list"></i>
                       </div>
                     </div>
-                    <select class="form-control select2" id = 'jenis_aset'>
+                    <select class="form-control select2" id ='jenis_aset' style="width: 85%;">
                       <option value='0' selected="selected">-- Pilih Salah Satu --</option>
-                      <option value='1'>Slip Setoran</option>
-                      <option value='2'>Slip Pembayaran/<i>multipayment</i></option>
-                      <option value='3'>Slip Penarikan</option>
-                      <option value='4'>Slip Pembayaran Kartu Kredit</option>
-                      <option value='5'>Formulir <i> walk in customer</i></option>
+                      <option value='1'>Formulir</option>
+                      <option value='2'>ATK</i></option>
+                      <option value='3'>Surat Berharga</option>
                     </select>
                   </div>
                 </div>
@@ -220,6 +218,7 @@ $this->load->view('dist/_partials/header');
                                 modal.style.display = "none";  
                               }
                               $("#formAsset")[0].reset();
+                              jenis_aset.value = 0 
                               toastr[data.status](data.message)
 
                               toastr.options = {
