@@ -10,43 +10,55 @@
 
         }
         
-        function createLaporan()
+        public function laporanStok() {
+            $data = array(
+                'title' => "Laporan Stok"
+            );
+            $this->load->view('dist/v_laporan', $data);
+        }
+
+        public function laporanPenggunaan() {
+            $aset = $this->m_aset->getList();
+            $data = array(
+                'title' => "Laporan Penggunaan",
+                'aset'  => $aset
+            );
+            $this->load->view('dist/v_laporan_penggunaan', $data);
+        }
+
+        public function createLaporan()
         {
-            // $params = array(
-            //                     'type'  => $this->input->post('type'),
-            //                     'bulan' => $this->input->post('bulan'),
-            //                     'tahun' => $this->input->post('tahun')
-            //                 );
-            $type = 'detail';
             $params = array(
-                                'type'  => $type,
-                                'month' => 12,
-                                'year' => 2020
+                                'type'  => $this->input->post('type'),
+                                'periode' => $this->input->post('periode')
                             );
+            // $params = array(
+            //                     'type'  => $type,
+            //                     'month' => 12,
+            //                     'year' => 2020
+            //                 );
             //get data for the report
             extract($params);
-            $tanggal = "'".$year."-".$month."-01'";
             $dataReport = $this->m_aset->getStock($params);
             extract($dataReport);
 
             // var_dump($data);
             // $indexMax = 4;
-            $tanggal = $year."-".$month."-01";
             $no=0;
             $i=1;
             error_reporting(0); // AGAR ERROR MASALAH VERSI PHP TIDAK MUNCUL
-            $filename = 'Laporan Stok '.strftime('%B %Y',strtotime($year."-".$month."-01")).".pdf";
+            $filename = 'reports/Laporan Stok '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
             $maxPerPage = 4;
             if($type =='rekap')
             {
                 $pdf = new FPDF('P', 'mm','A4');
-                $title = 'Daftar Stok Formulir '.strftime('%B %Y',strtotime($year."-".$month."-01"));
+                $title = 'Daftar Stok Formulir '.strftime('%B %Y',strtotime($periode."-01"));
             }
             elseif ($type == 'detail') 
             {
                 $pdf = new FPDF('L', 'mm','A4');
                 // $title = 'Laporan Stok Aset Bank '.$tanggal;
-                $title = 'Laporan Stok Aset Bank '.strftime('%B %Y',strtotime( $year."-".$month."-01"));
+                $title = 'Laporan Stok Aset Bank '.strftime('%B %Y',strtotime( $periode."-01"));
             }
             
             if($indexMax < $maxPerPage)
@@ -63,6 +75,7 @@
             $pdf->SetFont('Arial','B',10);
             if($type =='rekap')
             {
+                $pdf->SetLeftMargin(25);
                 $pdf->Cell(10,6,'No',1,0,'C');
                 $pdf->Cell(60,6,'Jenis Form',1,0,'C');
                 for ($i=1; $i <=$maxPerPage ; $i++) 
@@ -72,6 +85,7 @@
             }
             elseif ($type == 'detail') 
             {
+                $pdf->SetLeftMargin(15);
                 $pdf->Cell(10,12,'No',1,0,'C');
                 $pdf->Cell(60,12,'Jenis Form',1,0,'C');
                 for ($i=1; $i <=$maxPerPage ; $i++) 
@@ -112,7 +126,9 @@
                 }  
                 $pdf->Ln();
             }
-            $pdf->Output($filename,"I");
+            $pdf->Output($filename,"F");
+
+            echo json_encode(array('status' => 'success' , 'filename' => $filename));
         }
 
         // fungsi untuk membuat laporan pemakaian aset
@@ -120,19 +136,16 @@
         function createLaporanPemakaian()
         {
             $params = array(
-                        'bulan' => 11,
-                        'tahun' => 2020,
-                        'jenis_aset' => '',
-                        'aset_id'   => ''
-            );
+                            'aset_id'  => $this->input->post('aset_id'),
+                            'periode' => $this->input->post('periode')
+                        );
             $result = $this->m_aset->getPemakaian($params);
             // var_dump($result);
             $no=0;
             error_reporting(0); // AGAR ERROR MASALAH VERSI PHP TIDAK MUNCUL
-            $filename = 'Laporan Pemakaian Aset '.strftime('%B %Y').".pdf";
-            
+            $filename = 'reports/Laporan Pemakaian Aset '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
             $pdf = new FPDF('P', 'mm','A4');
-            $title = 'Laporan Pemakaian Aset '.strftime('%B %Y');
+            $title = 'Laporan Pemakaian Aset '.strftime('%B %Y',strtotime($periode."-01"));
             
             $pdf->AddPage();
             $pdf->SetFont('Arial','B',16);
@@ -140,7 +153,7 @@
             $pdf->Cell( 0, 10, $pdf->Image($image1, $pdf->GetX()+160, $pdf->GetY()-5, 33.78), 0, 0, 'C', false );
             $pdf->Ln();
             $pdf->Cell(0,7,'LAPORAN PEMAKAIAN ASET BANK',0,1,'C');
-            $pdf->Cell(0,7,strtoupper(strftime('%B %Y')),0,1,'C');
+            $pdf->Cell(0,7,strftime('%B %Y',strtotime($periode."-01")),0,1,'C');
             
             $pdf->Ln();
             
@@ -204,7 +217,9 @@
             }
             // $pdf->Cell(0,7,'Jenis Aset : '.$jenis_aset,0,1,'C');
             
-            $pdf->Output($filename,"I");
+            $pdf->Output($filename,"F");
+            echo json_encode(array('status' => 'success' , 'filename' => $filename));
+            
         }
 
 

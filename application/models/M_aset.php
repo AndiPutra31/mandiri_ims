@@ -20,7 +20,8 @@ class M_aset extends CI_Model{
 				$param = array(
 						'kode_aset' 	=> $aset_kode,
 						'nama_aset' 	=> $aset_name,
-						'jenis_aset' 	=> $jenis_aset,
+						// 'jenis_aset' 	=> $jenis_aset,
+						'jenis_aset' 	=> 1,
 						'status_aset' 	=> $status,
 						'qty_aset' 		=> 0,
 						'created_date' 	=> $_SESSION['SESSION_USERID'],
@@ -54,7 +55,8 @@ class M_aset extends CI_Model{
 			$param = array(
 						'kode_aset' 		=> $aset_kode,
 						'nama_aset' 		=> $aset_name,
-						'jenis_aset' 		=> $jenis_aset,
+						// 'jenis_aset' 		=> $jenis_aset,
+						'jenis_aset' 		=> 1,
 						'status_aset' 		=> $status,
 						'last_update_date' 	=> $_SESSION['SESSION_USERID'],
 						'last_update_by' 	=> date("Y-m-d H:i:s") 				
@@ -169,6 +171,8 @@ class M_aset extends CI_Model{
 		extract($params);
 		//get week index
 		//get first and last Day of month
+		$year = intval(substr($periode, 0,4));
+		$month = intval(substr($periode, 5,2));
 		$firstDate = mktime(0, 0, 0, $month, 1, $year);
 		$lastDate = mktime(0, 0, 0, $month, date('t', $firstDate), $year);
 		// //get first and last Day of month
@@ -253,31 +257,24 @@ class M_aset extends CI_Model{
 	public function getPemakaian($params)
 	{
 		extract($params);
+		
+		$tahun = intval(substr($periode, 0,4));
+		$bulan = intval(substr($periode, 5,2));
 		$where = '';
-		if($jenis_aset<>'')
-		{
-			$where .= "AND jenis_aset = ".$jenis_aset;
-		}
+		// if($jenis_aset<>'')
+		// {
+		// 	$where .= "AND jenis_aset = ".$jenis_aset;
+		// }
 		if($aset_id)
 		{
 			$where .= "AND m_aset.aset_id = ".$aset_id;
 		}
 		
 		$query = "SELECT m_aset.nama_aset , 
-							CASE 
-								WHEN jenis_aset = 1 THEN
-									'Slip Setoran'
-								WHEN jenis_aset = 2 THEN
-									'Slip Pembayaran/multipayment'
-								WHEN jenis_aset = 3 THEN
-									'Slip Penarikan'
-								WHEN jenis_aset = 4 THEN
-									'Slip Pembayaran Kartu Kredit'
-								WHEN jenis_aset = 5 THEN
-									'Formulir walk in customer'
-								END as jenis_aset
+							m_jenis_aset.jenis_aset_name as jenis_aset
 								, trans.created_date ,trans.type, trans.aset_qty , trans.pegawai_nama
 					FROM m_aset
+					INNER JOIN m_jenis_aset on m_jenis_aset.jenis_aset_id = m_aset.jenis_aset
 					INNER JOIN (
 							SELECT aset_id , aset_qty , tam.created_date, mu.pegawai_nama , 'Stok Masuk' as type
 							FROM t_aset_masuk tam
@@ -310,6 +307,27 @@ class M_aset extends CI_Model{
 		}
 		return $resultData;
 
+	}
+
+	public function getList()
+	{
+		$this->db->select("aset_id as id, nama_aset as text ");
+		$this->db->from('m_aset');
+		$this->db->where('status_aset',1);
+		$get = $this->db->get();
+		$result = $get->result();
+		// var_dump($result);
+		$array = array();
+		foreach ($result as $row) {
+			// $arr['id'] = $row->id;
+			// $arr['text'] = $row->text;
+			array_push($array, array(
+				'id' => $row->id,
+				'text' => $row->text
+			));
+		}
+		return $array;
+		// return array('results' => $array , 'pagination' => array('more' => false));
 	}
 }
 

@@ -22,6 +22,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <!-- CSS Libraries -->
 <?php
+if(!isset($_SESSION))
+{
+  session_start();
+}
 if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/jqvmap/dist/jqvmap.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/summernote/summernote-bs4.css">
@@ -33,27 +37,6 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/weather-icon/css/weather-icons.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/weather-icon/css/weather-icons-wind.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/summernote/summernote-bs4.css">
-<?php
-}elseif ($this->uri->segment(2) == "bootstrap_card") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/chocolat/dist/css/chocolat.css">
-<?php
-}elseif ($this->uri->segment(2) == "bootstrap_modal") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/prism/prism.css">
-<?php
-}elseif ($this->uri->segment(2) == "components_gallery") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/chocolat/dist/css/chocolat.css">
-<?php
-}elseif ($this->uri->segment(2) == "components_multiple_upload") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/dropzonejs/dropzone.css">
-<?php
-}elseif ($this->uri->segment(2) == "components_statistic") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/jqvmap/dist/jqvmap.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/flag-icon-css/css/flag-icon.min.css">
-<?php
-}elseif ($this->uri->segment(2) == "components_user") { ?>
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap-social/bootstrap-social.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css">
 <?php
 }elseif ($this->uri->segment(2) == "listAset") { ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap-daterangepicker/daterangepicker.css">
@@ -137,13 +120,14 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 <!-- /END GA --></head>
 
 <?php
+
 if ($this->uri->segment(2) == "layout_transparent") {
   $this->load->view('dist/_partials/layout-2');
   $this->load->view('dist/_partials/sidebar-2');
 }elseif ($this->uri->segment(2) == "layout_top_navigation") {
   $this->load->view('dist/_partials/layout-3');
   $this->load->view('dist/_partials/navbar');
-}elseif (!empty($_SESSION) && ($this->uri->segment(2) != "auth_forgot_password"&& $this->uri->segment(2) != "auth_register" && $this->uri->segment(2) != "auth_reset_password" && $this->uri->segment(2) != "errors_503" && $this->uri->segment(2) != "errors_403" && $this->uri->segment(2) != "errors_404" && $this->uri->segment(2) != "errors_500" && $this->uri->segment(2) != "utilities_contact" && $this->uri->segment(2) != "utilities_subscribe")) {
+}elseif (!empty($_SESSION) ) {
   $this->load->view('dist/_partials/layout');
   $this->load->view('dist/_partials/sidebar');
 }

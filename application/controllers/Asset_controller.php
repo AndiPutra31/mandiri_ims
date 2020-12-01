@@ -74,102 +74,10 @@ class asset_controller extends CI_Controller {
 		echo json_encode($result);
 	}
 
-	public function test()
+	public function getList()
 	{
-		$type = 'detail';
-        $params = array(
-                            'type'  => $type,
-                            'month' => 12,
-                            'year' => 2020
-                        );
-		extract($params);
-		//get week index
-		$firstDate = mktime(0, 0, 0, $month, 1, $year);
-		$lastDate = mktime(0, 0, 0, $month, date('t', $firstDate), $year);
-		// //get first and last Day of month
-		// $firstDate = date("Y-m-d", strtotime("'".$year."-".$month."-01'"));
-		// $lastDate = date("Y-m-t", strtotime("'".$year."-".$month."-01"));
-		
-		//get day
-		$firstDay = date("D",$firstDate);
-		$lastDay = date("D",$lastDate);
+		$result = $this->m_aset->getList();
 
-		//get week
-		$start_week = intval(date('W', $firstDate));
-		$end_week = intval(date('W', $lastDate));
-
-		echo $lastDay."<br><br>";
-
-		if(strtolower($lastDay) <> 'sun')
-		{
-			$end_week -= 1;
-		}
-
-		$join ='';
-		// echo 'start : '.$start_week." end : ".$end_week."<br>";
-		$select  = 'SELECT m_aset.nama_aset';
-		$index = 1;
-		for ($i=$start_week; $i <=$end_week ; $i++) { 
-			if($type =='rekap')
-			{
-				$select .= ',coalesce(masuk'.$i.'.qty,0) - coalesce(keluar'.$i.'.qty,0) as qty'.$index;
-				$join .= "LEFT JOIN (select aset_id ,sum(aset_qty) as qty 
-											 from t_aset_masuk 
-											 where WEEK(created_date,1) <= ".$i."
-											 group by aset_id ) masuk".$i." on masuk".$i.".aset_id = m_aset.kode_aset
-						LEFT JOIN (select aset_id ,sum(aset_qty) as qty
-											 from t_aset_keluar 
-											 where WEEK(created_date,1) <= ".$i."
-											 group by aset_id ) keluar".$i." on keluar".$i.".aset_id = m_aset.kode_aset 
-											 ";
-			}
-			elseif ($type =='detail') 
-			{
-				$select .= ',coalesce(masuk'.$i.'.qty,0) as masuk'.$index.', coalesce(keluar'.$i.'.qty,0) as keluar'.$index;
-				$whereGroup = "group by aset_id , WEEK(created_date,1)";	
-				$join .= 'LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
-									 from t_aset_masuk 
-									 group by aset_id , WEEK(created_date,1)
-								    ) masuk'.$i.' on masuk'.$i.'.aset_id = m_aset.kode_aset and masuk'.$i.'.minggu = '.$i.'
-						LEFT JOIN (select aset_id ,sum(aset_qty) as qty , WEEK(created_date,1) as minggu
-									 from t_aset_keluar 
-									 group by aset_id , WEEK(created_date,1)
-								  ) keluar'.$i.' on keluar'.$i.'.aset_id = m_aset.kode_aset 
-									 and masuk'.$i.'.minggu = keluar'.$i.'.minggu
-						 ';
-			}
-			$index++; 
-		}
-		$indexMax = $index;
-		$query = $select."
-		FROM m_aset ".$join." order by m_aset.aset_id";
-		echo $query;
-		// $result = $this->db->query($query);
-		// $res = array();
-		// foreach ($result->result_array() as $row)
-		// {
-		// 	$array = array();
-		// 	$array['nama_aset'] = $row['nama_aset'];
-		// 	for ($i=1; $i <$indexMax ; $i++) { 
-		// 		$array['minggu'.$i] = $row['qty'.$i];
-		// 	}
-		// 	array_push($res, $array);
-		// }
-
-		// var_dump($res);
-	}
-
-	public function test2()
-	{
-
-		$params = array(
-						'bulan' => 11,
-						'tahun'	=> 2020,
-						'jenis_aset' => 1,
-						'aset_id'	=> ''
-		);
-		$result = $this->m_aset->getPemakaian($params);
-
-		var_dump($result);
+		echo json_encode($result);
 	}
 }

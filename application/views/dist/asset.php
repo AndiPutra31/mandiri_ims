@@ -85,7 +85,7 @@ $this->load->view('dist/_partials/header');
                     <input type="text" class="form-control" placeholder="Kode Aset" name="aset_kode" id="aset_kode">
                   </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>Jenis Aset</label>
                   <div class ='row'>
                     <div class="input-group-prepend" style="width: 43px;margin-left: 15px">
@@ -100,7 +100,7 @@ $this->load->view('dist/_partials/header');
                       <option value='3'>Surat Berharga</option>
                     </select>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label>Status</label>
                   <div class="row">
@@ -144,7 +144,7 @@ $this->load->view('dist/_partials/header');
               },
               "columnDefs": [
                   {
-                      "targets": [ 0,3,5],
+                      "targets": [ 0,3,4,5],
                       "visible": false,
                       "searchable": false
                   },
@@ -190,9 +190,11 @@ $this->load->view('dist/_partials/header');
                 var aset_kode = document.getElementsByName("aset_kode")[0];
                 var aset_id = document.getElementsByName("aset_id")[0];
                 var aset_name = document.getElementsByName("aset_name")[0];
-                var jenis_aset = document.getElementById("jenis_aset");
+                // var jenis_aset = document.getElementById("jenis_aset");
                 var status = document.querySelector('input[name="status"]:checked').value;
-                if(jenis_aset.value > 0 && aset_name.value != '' && aset_kode.value != '')
+                if(aset_name.value != '' && aset_kode.value != ''
+                  // &&jenis_aset.value > 0 
+                  )
                 {
                    $.ajax({
                        type: "POST",
@@ -201,7 +203,7 @@ $this->load->view('dist/_partials/header');
                           aset_id        : aset_id.value,
                           aset_kode      : aset_kode.value, 
                           aset_name      : aset_name.value, 
-                          jenis_aset     : jenis_aset.value,
+                          // jenis_aset     : jenis_aset.value,
                           status          : status,
                           type            : type
                        },
@@ -218,7 +220,7 @@ $this->load->view('dist/_partials/header');
                                 modal.style.display = "none";  
                               }
                               $("#formAsset")[0].reset();
-                              jenis_aset.value = 0 
+                              // jenis_aset.value = 0 
                               toastr[data.status](data.message)
 
                               toastr.options = {
@@ -258,14 +260,14 @@ $this->load->view('dist/_partials/header');
                     message = message + 'Kode Aset'
                   }
                   
-                  if(jenis_aset.value == 0)
-                  {
-                    if(message.length > 0)
-                    {
-                      message = message+',';
-                    }
-                    message = message + 'Jenis Aset';
-                  }
+                  // if(jenis_aset.value == 0)
+                  // {
+                  //   if(message.length > 0)
+                  //   {
+                  //     message = message+',';
+                  //   }
+                  //   message = message + 'Jenis Aset';
+                  // }
                   message = message+' tidak boleh kosong';
                   toastr['warning'](message)
 

@@ -27,6 +27,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li><a class="nav-link" href="<?php echo base_url(); ?>asset_trans/output"><i class="far fa-file-alt"></i><span>Input Stok Keluar</span></a></li>
               </ul>
             </li>
+            <li class="menu-header">Laporan</li>
+            <li>
+              <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Laporan</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="<?php echo base_url(); ?>laporan_controller/laporanStok"><i class="far fa-file-alt"></i> <span>Laporan Stok Aset</span></a></li>
+                <li><a class="nav-link" href="<?php echo base_url(); ?>laporan_controller/laporanPenggunaan"><i class="far fa-file-alt"></i><span>Laporan Penggunaan Aset</span></a></li>
+              </ul>
+            </li>
           </ul>
         </aside>
       </div>
