@@ -11,7 +11,7 @@
  Target Server Version : 50621
  File Encoding         : 65001
 
- Date: 24/11/2020 22:15:54
+ Date: 01/12/2020 21:10:52
 */
 
 SET NAMES utf8mb4;
@@ -33,14 +33,16 @@ CREATE TABLE `m_aset`  (
   `last_update_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `qty_aset` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`aset_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_aset
 -- ----------------------------
-INSERT INTO `m_aset` VALUES (1, '442', 'aset 1231', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 22:06:05', '1', 14);
-INSERT INTO `m_aset` VALUES (2, '123', 'aset 2', '2', 1, '2020-11-15 19:11:36', 'admin', '2020-11-24 19:57:59', '1', 100);
-INSERT INTO `m_aset` VALUES (3, '123as53231', 'Aset 1231', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:19:33', '0000-00-00 00:00:00', '2020-11-24 13:25:33', 0);
+INSERT INTO `m_aset` VALUES (5, '14122121101', 'Aplikasi Setoran', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:06:06', '2020-12-01 20:59:35', '1', 93);
+INSERT INTO `m_aset` VALUES (6, '14122121102', 'Formulir Penarikan', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:08:00', '2020-12-01 20:58:40', '1', 10);
+INSERT INTO `m_aset` VALUES (9, '14122121103', 'Formulir Multi Pembayaran', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:51:43', '0000-00-00 00:00:00', '2020-12-01 14:53:01', 0);
+INSERT INTO `m_aset` VALUES (10, '14122121104', 'Formulir Pembayaran Kartu Kredit', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:53:38', '2020-12-01 20:59:12', '1', 34);
+INSERT INTO `m_aset` VALUES (11, '14122121105', 'Formulir Walk In Customer', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:55:09', '2020-12-01 21:09:54', '1', 166);
 
 -- ----------------------------
 -- Table structure for m_aset_hist
@@ -61,7 +63,7 @@ CREATE TABLE `m_aset_hist`  (
   `action` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `changedate` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`hist_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of m_aset_hist
@@ -84,6 +86,62 @@ INSERT INTO `m_aset_hist` VALUES (15, 1, '442', 'aset 1231', '3', 1, '2020-11-15
 INSERT INTO `m_aset_hist` VALUES (16, 1, '442', 'aset 1231', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 21:59:32', '1', 17, 'update', '2020-11-24 21:59:51');
 INSERT INTO `m_aset_hist` VALUES (17, 1, '442', 'aset 1231', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 21:59:51', '1', 15, 'update', '2020-11-24 22:03:23');
 INSERT INTO `m_aset_hist` VALUES (18, 1, '442', 'aset 1231', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 22:03:23', '1', -1, 'update', '2020-11-24 22:06:05');
+INSERT INTO `m_aset_hist` VALUES (19, 1, '442', 'aset 1231', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 22:06:05', '1', 14, 'update', '2020-11-29 14:32:20');
+INSERT INTO `m_aset_hist` VALUES (20, 3, '123as53231', 'Aset 1231', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:19:33', '0000-00-00 00:00:00', '2020-11-24 13:25:33', 0, 'update', '2020-11-29 14:32:23');
+INSERT INTO `m_aset_hist` VALUES (21, 4, '', '', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:26:42', NULL, NULL, 0, 'update', '2020-11-29 14:32:25');
+INSERT INTO `m_aset_hist` VALUES (22, 3, '123as53231', 'Aset', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:19:33', '0000-00-00 00:00:00', '2020-11-24 13:25:33', 0, 'update', '2020-11-29 14:32:27');
+INSERT INTO `m_aset_hist` VALUES (23, 4, '', '3', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:26:42', NULL, NULL, 0, 'update', '2020-11-29 14:32:34');
+INSERT INTO `m_aset_hist` VALUES (24, 1, '442', 'Aset 1', '3', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 22:06:05', '1', 14, 'update', '2020-11-29 23:42:48');
+INSERT INTO `m_aset_hist` VALUES (25, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-11-24 22:06:05', '1', 14, 'update', '2020-11-30 21:31:02');
+INSERT INTO `m_aset_hist` VALUES (26, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-11-30 21:31:02', '1', 15, 'update', '2020-11-30 21:42:32');
+INSERT INTO `m_aset_hist` VALUES (27, 2, '123', 'aset 2', '2', 1, '2020-11-15 19:11:36', 'admin', '2020-11-24 19:57:59', '1', 100, 'update', '2020-11-30 21:46:28');
+INSERT INTO `m_aset_hist` VALUES (28, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-11-30 21:42:32', '1', 16, 'update', '2020-11-30 21:48:32');
+INSERT INTO `m_aset_hist` VALUES (29, 2, '123', 'aset 2', '2', 1, '2020-11-15 19:11:36', 'admin', '2020-11-30 21:46:28', '1', 101, 'update', '2020-11-30 21:48:35');
+INSERT INTO `m_aset_hist` VALUES (30, 2, '123', 'aset 2', '2', 1, '2020-11-15 19:11:36', 'admin', '2020-11-30 21:46:28', '1', 0, 'update', '2020-11-30 21:48:53');
+INSERT INTO `m_aset_hist` VALUES (31, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-11-30 21:42:32', '1', 0, 'update', '2020-11-30 21:49:00');
+INSERT INTO `m_aset_hist` VALUES (32, 3, '123as53231', 'Aset 3', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:19:33', '0000-00-00 00:00:00', '2020-11-24 13:25:33', 0, 'update', '2020-11-30 21:49:21');
+INSERT INTO `m_aset_hist` VALUES (33, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-11-30 21:49:00', '1', 105, 'update', '2020-12-01 15:56:54');
+INSERT INTO `m_aset_hist` VALUES (34, 1, '442', 'Aset 1', '1', 1, '2020-11-15 19:10:51', 'admin', '2020-12-01 15:56:54', '1', 106, 'update', '2020-12-01 17:20:46');
+INSERT INTO `m_aset_hist` VALUES (35, 8, '124156122330', 'coba1', '1', 1, '0000-00-00 00:00:00', '2020-12-01 12:11:40', NULL, NULL, 0, 'update', '2020-12-01 18:11:49');
+INSERT INTO `m_aset_hist` VALUES (36, 9, '14122121103', 'Formulir Multi Pembayaran', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:51:43', NULL, NULL, 0, 'update', '2020-12-01 20:53:01');
+INSERT INTO `m_aset_hist` VALUES (37, 1, '442', 'Aset 1', '1', 0, '2020-11-15 19:10:51', 'admin', '0000-00-00 00:00:00', '2020-12-01 11:20:46', 106, 'delete', '2020-12-01 20:57:03');
+INSERT INTO `m_aset_hist` VALUES (38, 2, '123', 'aset 2', '2', 1, '2020-11-15 19:11:36', 'admin', '2020-11-30 21:48:53', '1', 100, 'delete', '2020-12-01 20:57:03');
+INSERT INTO `m_aset_hist` VALUES (39, 3, '123as53231', 'Aset 3', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:19:33', '2020-11-30 21:49:21', '1', 4, 'delete', '2020-12-01 20:57:04');
+INSERT INTO `m_aset_hist` VALUES (40, 4, '', 'Aset 4', '1', 1, '0000-00-00 00:00:00', '2020-11-24 13:26:42', NULL, NULL, 0, 'delete', '2020-12-01 20:57:04');
+INSERT INTO `m_aset_hist` VALUES (41, 7, '123124', '1', '2', 1, '0000-00-00 00:00:00', '2020-11-30 16:20:54', NULL, NULL, 0, 'delete', '2020-12-01 20:57:09');
+INSERT INTO `m_aset_hist` VALUES (42, 8, '124156122330', 'coba1', '1', 0, '0000-00-00 00:00:00', '2020-12-01 12:11:40', '0000-00-00 00:00:00', '2020-12-01 12:11:49', 0, 'delete', '2020-12-01 20:57:09');
+INSERT INTO `m_aset_hist` VALUES (43, 5, '14122121101', 'Aplikasi Setoran', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:06:06', NULL, NULL, 0, 'update', '2020-12-01 20:57:52');
+INSERT INTO `m_aset_hist` VALUES (44, 10, '14122121104', 'Formulir Pembayaran Kartu Kredit', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:53:38', NULL, NULL, 0, 'update', '2020-12-01 20:57:59');
+INSERT INTO `m_aset_hist` VALUES (45, 11, '14122121105', 'Formulir Walk In Customer', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:55:09', NULL, NULL, 0, 'update', '2020-12-01 20:58:09');
+INSERT INTO `m_aset_hist` VALUES (46, 10, '14122121104', 'Formulir Pembayaran Kartu Kredit', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:53:38', '2020-12-01 20:57:59', '1', 20, 'update', '2020-12-01 20:58:18');
+INSERT INTO `m_aset_hist` VALUES (47, 6, '14122121102', 'Formulir Penarikan', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:08:00', NULL, NULL, 0, 'update', '2020-12-01 20:58:30');
+INSERT INTO `m_aset_hist` VALUES (48, 6, '14122121102', 'Formulir Penarikan', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:08:00', '2020-12-01 20:58:30', '1', 9, 'update', '2020-12-01 20:58:40');
+INSERT INTO `m_aset_hist` VALUES (49, 10, '14122121104', 'Formulir Pembayaran Kartu Kredit', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:53:38', '2020-12-01 20:58:18', '1', 36, 'update', '2020-12-01 20:59:12');
+INSERT INTO `m_aset_hist` VALUES (50, 5, '14122121101', 'Aplikasi Setoran', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:06:06', '2020-12-01 20:57:52', '1', 105, 'update', '2020-12-01 20:59:27');
+INSERT INTO `m_aset_hist` VALUES (51, 5, '14122121101', 'Aplikasi Setoran', '1', 1, '0000-00-00 00:00:00', '2020-11-30 16:06:06', '2020-12-01 20:59:27', '1', 95, 'update', '2020-12-01 20:59:35');
+INSERT INTO `m_aset_hist` VALUES (52, 11, '14122121105', 'Formulir Walk In Customer', '1', 1, '0000-00-00 00:00:00', '2020-12-01 14:55:09', '2020-12-01 20:58:09', '1', 168, 'update', '2020-12-01 21:09:54');
+
+-- ----------------------------
+-- Table structure for m_jenis_aset
+-- ----------------------------
+DROP TABLE IF EXISTS `m_jenis_aset`;
+CREATE TABLE `m_jenis_aset`  (
+  `jenis_aset_id` int(11) NOT NULL AUTO_INCREMENT,
+  `jenis_aset_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `jenis_aset_status` smallint(1) NULL DEFAULT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `created_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `last_updated_date` datetime(0) NULL DEFAULT NULL,
+  `last_updated_by` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`jenis_aset_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_jenis_aset
+-- ----------------------------
+INSERT INTO `m_jenis_aset` VALUES (1, 'Formulir', 1, '2020-11-30 20:16:01', '1', NULL, NULL);
+INSERT INTO `m_jenis_aset` VALUES (2, 'ATK', 1, '2020-11-30 20:16:01', '1', NULL, NULL);
+INSERT INTO `m_jenis_aset` VALUES (3, 'Surat Berharga', 1, '2020-11-30 20:16:01', '1', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for m_user
@@ -133,13 +191,15 @@ CREATE TABLE `t_aset_keluar`  (
   `last_update_date` datetime(0) NULL DEFAULT NULL,
   `last_update_by` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`t_aset_keluar_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_aset_keluar
 -- ----------------------------
-INSERT INTO `t_aset_keluar` VALUES (1, 442, 2, 1, '2020-11-24 15:59:51', '1', NULL, NULL);
-INSERT INTO `t_aset_keluar` VALUES (2, 442, 16, 1, '2020-11-24 16:03:23', '1', NULL, NULL);
+INSERT INTO `t_aset_keluar` VALUES (1, 10, 2, 1, '2020-12-01 14:59:12', '1', NULL, NULL);
+INSERT INTO `t_aset_keluar` VALUES (2, 5, 10, 1, '2020-12-01 14:59:27', '1', NULL, NULL);
+INSERT INTO `t_aset_keluar` VALUES (3, 5, 2, 1, '2020-12-01 14:59:35', '1', NULL, NULL);
+INSERT INTO `t_aset_keluar` VALUES (4, 11, 2, 1, '2020-12-01 15:09:52', '1', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_aset_masuk
@@ -155,19 +215,17 @@ CREATE TABLE `t_aset_masuk`  (
   `last_update_date` datetime(0) NULL DEFAULT NULL,
   `last_update_by` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`t_aset_masuk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_aset_masuk
 -- ----------------------------
-INSERT INTO `t_aset_masuk` VALUES (1, 123, 100, 1, '2020-11-24 13:55:18', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (3, 12542212, 100, 1, '2020-11-24 13:57:59', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (5, 442, 1, 1, '2020-11-24 15:57:35', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (6, 442, 1, 1, '2020-11-24 15:57:44', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (7, 442, 1, 1, '2020-11-24 15:58:35', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (8, 442, 12, 1, '2020-11-24 15:58:47', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (9, 442, 2, 1, '2020-11-24 15:59:32', '1', NULL, NULL);
-INSERT INTO `t_aset_masuk` VALUES (10, 442, 15, 1, '2020-11-24 16:06:05', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (1, 5, 105, 1, '2020-12-01 14:57:52', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (2, 10, 20, 1, '2020-12-01 14:57:59', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (3, 11, 168, 1, '2020-12-01 14:58:09', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (4, 10, 16, 1, '2020-12-01 14:58:18', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (5, 6, 9, 1, '2020-12-01 14:58:30', '1', NULL, NULL);
+INSERT INTO `t_aset_masuk` VALUES (6, 6, 1, 1, '2020-12-01 14:58:40', '1', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_report

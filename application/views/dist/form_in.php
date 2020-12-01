@@ -97,8 +97,9 @@ $this->load->view('dist/_partials/header');
                   var qty = document.getElementById("qty");
                   var type = document.getElementById("type");
                   var stock = document.getElementById("stock");
+                  var sisa_stock = stock.value < qty.value
                   
-                  if(asset_id.value >0 && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' ))
+                  if(asset_id.value >0 && qty.value > 0 && ((sisa_stock>= 0 && type.value =='out') || type.value == 'in' ))
                   {
                   console.log('lalala');
                     $.ajax({
@@ -145,8 +146,8 @@ $this->load->view('dist/_partials/header');
                   }
                   else
                   {
+                    asset_id.value >0 && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' )
                     var message ='';
-
                     if(kode_aset.value =='' || qty.value == 0 )
                     {
                       if(kode_aset.value =='')
@@ -168,9 +169,13 @@ $this->load->view('dist/_partials/header');
                     {
                       message = 'Kode Aset Salah';
                     }
-                    else if(stock.value < qty.value)
+                    else if(sisa_stock < 0)
                     {
-                      message = 'Stok barang kurang';
+                      console.log(stock.value);
+                      console.log(qty.value);
+                      console.log(stock.value - qty.value);
+
+                      message = 'Stok barang kurang ';
                     }
                     toastr['warning'](message)
 
