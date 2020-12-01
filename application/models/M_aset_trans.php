@@ -69,6 +69,30 @@ class M_aset_trans extends CI_Model{
 		return $result;
 	}
 
+	public function terakhir_masuk()
+	{
+		$sql = "SELECT * FROM t_aset_masuk ORDER BY created_date DESC limit 5";
+		$result = $this->db->query($sql);
+		$nbrows = $result->num_rows();
+		$jsonresult = json_encode(array(
+			'total'=>$nbrows,
+			'results'=>$result->result()
+		));
+		return $jsonresult;
+	}
+
+	public function terakhir_keluar()
+	{
+		$sql = "SELECT * FROM t_aset_keluar ORDER BY created_date DESC limit 5";
+		$result = $this->db->query($sql);
+		$nbrows = $result->num_rows();
+		$jsonresult = json_encode(array(
+			'total'=>$nbrows,
+			'results'=>$result->result()
+		));
+		return $jsonresult;
+	}
+
 }
 
 ?>

@@ -6,6 +6,8 @@ class Dist extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		session_start();
+		$this->load->model('m_aset');
+		$this->load->model('m_aset_trans');
 	}
 
 	public function index() {
@@ -38,6 +40,36 @@ class Dist extends CI_Controller {
 			$this->load->view('dist/auth-login', $data);
 
 		}
+	}
+
+	public function jumlah_tipe_aset(){
+		$result = $this->m_aset->get_all_data();
+		echo json_encode($result);
+	}
+
+	public function total_aset(){
+		$result = $this->m_aset->total_qty();
+		echo json_encode($result);
+	}
+
+	public function min_aset($batas){
+		$result = $this->m_aset->min_qty($batas);
+		echo json_encode($result);
+	}
+
+	public function max_aset(){
+		$result = $this->m_aset->max_qty();
+		echo json_encode($result);
+	}
+
+	public function last_in(){
+		$result = $this->m_aset_trans->terakhir_masuk();
+		echo json_encode($result);
+	}
+
+	public function last_out(){
+		$result = $this->m_aset_trans->terakhir_keluar();
+		echo json_encode($result);
 	}
 
 	public function index_0() {
