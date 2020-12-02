@@ -4,13 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="<?php echo base_url(); ?>dist/index">Mandiri IMS</a>
+            <a href="<?php echo base_url(); ?>dist/index"><img src="<?php echo base_url(); ?>assets/img/mandiri_logo.png" alt="logo mandiri" width="130px"  ></a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
             <a href="<?php echo base_url(); ?>dist/index">MIMS</a>
           </div>
           <ul class="sidebar-menu">
-            <li class="<?php echo $this->uri->segment(2) == 'index_0' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>dist/index_0">General Dashboard</a></li>
+            <?php if($_SESSION['SESSION_USERROLE'] ==1)
+            {
+            ?>
+            <li class="<?php echo $this->uri->segment(2) == 'index_0' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>dist/index_0">Dashboard</a></li>
             <li class="menu-header">Master Data</li>
             <li>
               <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Master</span></a>
@@ -19,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li><a class="nav-link" href="<?php echo base_url(); ?>asset_controller/listAset"><i class="fas fa-box"></i> <span>Master Aset</span></a></li>
               </ul>
             </li>
+          <?php } ?>
             <li class="menu-header">Transaksi Data</li>
             <li>
               <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Transaksi</span></a>
@@ -27,6 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li><a class="nav-link" href="<?php echo base_url(); ?>asset_trans/output"><i class="far fa-file-alt"></i><span>Input Stok Keluar</span></a></li>
               </ul>
             </li>
+            <?php if($_SESSION['SESSION_USERROLE'] ==1)
+            {
+            ?>
             <li class="menu-header">Laporan</li>
             <li>
               <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Laporan</span></a>
@@ -35,6 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li><a class="nav-link" href="<?php echo base_url(); ?>laporan_controller/laporanPenggunaan"><i class="far fa-file-alt"></i><span>Laporan Penggunaan Aset</span></a></li>
               </ul>
             </li>
+          <?php } ?>
           </ul>
         </aside>
       </div>

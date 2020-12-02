@@ -71,26 +71,28 @@ class M_aset_trans extends CI_Model{
 
 	public function terakhir_masuk()
 	{
-		$sql = "SELECT * FROM t_aset_masuk ORDER BY created_date DESC limit 5";
+		$sql = "SELECT m_aset.nama_aset , t_aset_masuk.created_date , aset_qty as qty
+				FROM t_aset_masuk  
+				INNER JOIN m_aset on m_aset.aset_id = t_aset_masuk.aset_id
+				ORDER BY t_aset_masuk.created_date DESC limit 5";
 		$result = $this->db->query($sql);
-		$nbrows = $result->num_rows();
-		$jsonresult = json_encode(array(
-			'total'=>$nbrows,
-			'results'=>$result->result()
-		));
-		return $jsonresult;
+		// $nbrows = $result->num_rows();
+		return $result->result();
 	}
 
 	public function terakhir_keluar()
 	{
-		$sql = "SELECT * FROM t_aset_keluar ORDER BY created_date DESC limit 5";
+		$sql = "SELECT m_aset.nama_aset , t_aset_keluar.created_date , aset_qty as qty
+				FROM t_aset_keluar  
+				INNER JOIN m_aset on m_aset.aset_id = t_aset_keluar.aset_id
+				ORDER BY t_aset_keluar.created_date DESC limit 5";
 		$result = $this->db->query($sql);
-		$nbrows = $result->num_rows();
-		$jsonresult = json_encode(array(
-			'total'=>$nbrows,
-			'results'=>$result->result()
-		));
-		return $jsonresult;
+		// $nbrows = $result->num_rows();
+		// $jsonresult = json_encode(array(
+		// 	'total'=>$nbrows,
+		// 	'results'=>$result->result()
+		// ));
+		return $result->result();
 	}
 
 }

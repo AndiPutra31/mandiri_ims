@@ -150,26 +150,26 @@ class M_aset extends CI_Model{
 
 	public function min_qty($batas)
 	{
-		$sql = "SELECT * FROM `m_aset` ORDER BY qty_aset ASC limit ".$batas;
+		$sql = "SELECT nama_aset , qty_aset as qty FROM `m_aset` ORDER BY qty_aset ASC limit ".$batas;
 		$result = $this->db->query($sql);
 		// $nbrows = $result->num_rows();
-		$jsonresult = json_encode(array(
-			// 'total'=>$nbrows,
-			'results'=>$result->result()
-		));
-		return $jsonresult;
+		// $jsonresult = json_encode(array(
+		// 	// 'total'=>$nbrows,
+		// 	'results'=>$result->result()
+		// ));
+		return $result->result();
 	}
 
 	public function max_qty()
 	{
-		$sql = "SELECT * FROM `m_aset` ORDER BY qty_aset DESC limit 1";
+		$sql = "SELECT nama_aset, qty_aset as qty FROM `m_aset` ORDER BY qty_aset DESC limit 1";
 		$result = $this->db->query($sql);
 		// $nbrows = $result->num_rows();
-		$jsonresult = json_encode(array(
-			// 'total'=>$nbrows,
-			'results'=>$result->result()
-		));
-		return $jsonresult;
+		// $jsonresult = json_encode(array(
+		// 	// 'total'=>$nbrows,
+		// 	'results'=>$result->result()
+		// ));
+		return $result->result();
 	}
 
 	public function get_quantity()

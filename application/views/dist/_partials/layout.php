@@ -18,9 +18,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="d-sm-none d-lg-inline-block">Hi, <?php echo $_SESSION['SESSION_USERNAME']; ?></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <!-- <div class="dropdown-title">Logged in 5 min ago</div> -->
-              <a href="<?php echo base_url(); ?>dist/features_activities" class="dropdown-item has-icon">
+              <!-- <a href="<?php echo base_url(); ?>dist/features_activities" class="dropdown-item has-icon">
                 <i class="fas fa-bolt"></i> Activities
-              </a>
+              </a> -->
               <div class="dropdown-divider"></div>
               <a href="<?php echo base_url() ?>/user_controller/logout" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
