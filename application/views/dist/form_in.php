@@ -97,8 +97,9 @@ $this->load->view('dist/_partials/header');
                   var qty = document.getElementById("qty");
                   var type = document.getElementById("type");
                   var stock = document.getElementById("stock");
-                  var sisa_stock = stock.value < qty.value
-                  
+                  var sisa_stock = stock.value - qty.value
+                  console.log(sisa_stock);
+                  console.log(parseInt(qty.value));
                   if(asset_id.value >0 && qty.value > 0 && ((sisa_stock>= 0 && type.value =='out') || type.value == 'in' ))
                   {
                   console.log('lalala');
@@ -146,7 +147,6 @@ $this->load->view('dist/_partials/header');
                   }
                   else
                   {
-                    asset_id.value >0 && qty.value > 0 && ((stock.value >= qty.value && type.value =='out') || type.value == 'in' )
                     var message ='';
                     if(kode_aset.value =='' || qty.value == 0 )
                     {
@@ -155,8 +155,9 @@ $this->load->view('dist/_partials/header');
                         message = message + 'Kode Aset'
                       }
                       
-                      else if(qty.value == 0)
+                      else if(parseInt(qty.value) < parseInt('1'))
                       {
+                        console.log('aa');
                         if(message.length > 0)
                         {
                           message = message+',';
@@ -176,6 +177,10 @@ $this->load->view('dist/_partials/header');
                       console.log(stock.value - qty.value);
 
                       message = 'Stok barang kurang ';
+                    }
+                    else
+                    {
+                      message = 'Quantity Harus Positif';
                     }
                     toastr['warning'](message)
 

@@ -47,15 +47,16 @@
             $no=0;
             $i=1;
             error_reporting(0); // AGAR ERROR MASALAH VERSI PHP TIDAK MUNCUL
-            $filename = 'reports/Laporan Stok '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
             $maxPerPage = 4;
             if($type =='rekap')
             {
+                $filename = 'reports/Laporan Rekap Stok '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
                 $pdf = new FPDF('P', 'mm','A4');
                 $title = 'Daftar Stok Formulir '.strftime('%B %Y',strtotime($periode."-01"));
             }
             elseif ($type == 'detail') 
             {
+                $filename = 'reports/Laporan Detail Stok '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
                 $pdf = new FPDF('L', 'mm','A4');
                 // $title = 'Laporan Stok Aset Bank '.$tanggal;
                 $title = 'Laporan Stok Aset Bank '.strftime('%B %Y',strtotime( $periode."-01"));
@@ -65,6 +66,9 @@
             {
                 $maxPerPage = $indexMax;
             }
+
+            //deletes old reports
+            $this->deleteFiles();
 
             $pdf->AddPage();
             $pdf->SetFont('Arial','B',16);
@@ -143,6 +147,10 @@
             // var_dump($result);
             $no=0;
             error_reporting(0); // AGAR ERROR MASALAH VERSI PHP TIDAK MUNCUL
+            
+            //deletes old reports
+            $this->deleteFiles();
+
             $filename = 'reports/Laporan Pemakaian Aset '.strftime('%B %Y',strtotime($periode."-01")).".pdf";
             $pdf = new FPDF('P', 'mm','A4');
             $title = 'Laporan Pemakaian Aset '.strftime('%B %Y',strtotime($periode."-01"));
@@ -222,6 +230,28 @@
             
         }
 
-
+        function deleteFiles()
+        {
+            $dir = 'reports';
+            if (is_dir($dir)) 
+            { 
+                // echo 'ya';
+             $objects = scandir($dir);
+             foreach ($objects as $object) { 
+               if ($object != "." && $object != "..") { 
+                 // if (is_dir($dir. DIRECTORY_SEPARATOR .$object) && !is_link($dir."/".$object))
+                 //   rrmdir($dir. DIRECTORY_SEPARATOR .$object);
+                 // else
+                    // echo $object.'<br>';
+                   unlink($dir. DIRECTORY_SEPARATOR .$object); 
+               } 
+             }
+             // rmdir($dir); 
+           } 
+           else
+           {
+            echo 'tidak';
+           }
+        }
     }
 ?>
