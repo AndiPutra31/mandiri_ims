@@ -168,7 +168,7 @@ $this->load->view('dist/_partials/header');
                     }
                     else if (asset_id.value == 0)
                     {
-                      message = 'Kode Aset Salah';
+                      message = 'Kode Aset Salah Atau Aset Tidak Aktif';
                     }
                     else if(sisa_stock < 0)
                     {

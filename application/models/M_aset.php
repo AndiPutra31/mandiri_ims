@@ -177,9 +177,10 @@ class M_aset extends CI_Model{
 		$this->db->select('qty_aset , aset_id');
 		$this->db->from('m_aset');
 		$this->db->where('kode_aset', $this->input->post('kode_aset'));
+		$this->db->where('status_aset', '1');
 		$get = $this->db->get();
 		$result = $get->row();
-		// echo $result->qty_aset;
+		echo $result->qty_aset;
 		if(is_null($result))
 		{
 			$qty = 0;

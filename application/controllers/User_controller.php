@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin : *');
+header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 class User_controller extends CI_Controller {
 
