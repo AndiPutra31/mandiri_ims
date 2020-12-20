@@ -91,7 +91,7 @@ $this->load->view('dist/_partials/header');
                           });
             }
           
-          $('#kode_aset').on('keyup keypress', function(e) {
+          $('#kode_aset').on('keydown keypress', function(e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) { 
               e.preventDefault();
@@ -101,6 +101,7 @@ $this->load->view('dist/_partials/header');
           });
 
           $(document).ready(function(){
+            document.getElementById("kode_aset").focus();
             $("#BtnSave").click(function()
                 {       
                   var asset_id = document.getElementById("asset_id");
@@ -151,7 +152,7 @@ $this->load->view('dist/_partials/header');
                                   "showMethod": "fadeIn",
                                   "hideMethod": "fadeOut"
                                 }
-
+                                document.getElementById("kode_aset").focus();
                               }
                           });
                      
@@ -212,7 +213,9 @@ $this->load->view('dist/_partials/header');
                                   "showMethod": "fadeIn",
                                   "hideMethod": "fadeOut"
                                 }
+                                document.getElementById("kode_aset").focus();
                   }
+
                  return false;
                });
           });
