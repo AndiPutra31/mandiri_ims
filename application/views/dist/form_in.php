@@ -40,7 +40,7 @@ $this->load->view('dist/_partials/header');
                     <div class="form-group">
                       <label>Aset</label>
                       <input type="text" id="kode_aset" onchange="searchAset()" name="kode_aset" class="form-control">
-                      <input type="text" id="asset_id" name="asset_id" value= "0" hidden />
+                      <input type="text" id="asset_id" name="asset_id" hidden />
 
                     </div>
                     <div class="form-group">
