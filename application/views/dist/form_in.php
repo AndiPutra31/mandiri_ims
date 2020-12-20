@@ -90,6 +90,16 @@ $this->load->view('dist/_partials/header');
                               }
                           });
             }
+          
+          $('#kode_aset').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+              e.preventDefault();
+              document.getElementById('qty').focus()
+              return false;
+            }
+          });
+
           $(document).ready(function(){
             $("#BtnSave").click(function()
                 {       
@@ -97,7 +107,8 @@ $this->load->view('dist/_partials/header');
                   var qty = document.getElementById("qty");
                   var type = document.getElementById("type");
                   var stock = document.getElementById("stock");
-                  var sisa_stock = stock.value - qty.value
+                  var sisa_stock = stock.value - qty.value;
+                  console.log(asset_id.value);
                   console.log(sisa_stock);
                   console.log(parseInt(qty.value));
                   if(asset_id.value >0 && qty.value > 0 && ((sisa_stock>= 0 && type.value =='out') || type.value == 'in' ))

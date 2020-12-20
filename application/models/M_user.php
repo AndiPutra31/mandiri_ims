@@ -47,8 +47,8 @@ class M_user extends CI_Model{
 						'nip' => $nip,
 						'role' => $role,
 						'status' =>$status,
-						'created_date' => $_SESSION['SESSION_USERID'],
-						'created_by' => date("Y-m-d H:i:s") 				
+						'created_by' => $_SESSION['SESSION_USERID'],
+						'created_date' => date("Y-m-d H:i:s") 				
 					);
 				$flag = 1;
 				$this->db->insert('m_user', $param);
@@ -81,8 +81,8 @@ class M_user extends CI_Model{
 						'nip' => $nip,
 						'role' => $role,
 						'status' => $status,
-						'last_update_date' => $_SESSION['SESSION_USERID'],
-						'last_updated_by' => date("Y-m-d H:i:s") 				
+						'last_updated_by' => $_SESSION['SESSION_USERID'],
+						'last_update_date' => date("Y-m-d H:i:s") 				
 					);
 			if($passwd<>'')
 			{
@@ -175,10 +175,9 @@ class M_user extends CI_Model{
 		$this->db->empty_table('t_aset_keluar');
 		$this->db->empty_table('t_aset_masuk');
 		$this->db->empty_table('t_report');
-		// $this->db->empty_table('m_jenis_aset');
-		$this->db->empty_table('m_aset_hist');
-		$this->db->empty_table('m_aset');
+		$this->db->query("UPDATE m_aset SET qty_aset=0");
 		$this->db->query("Delete from m_user WHERE user_name <> 'admin'");
+		// $this->db->empty_table('m_jenis_aset');
 		$result = "ok";
 		return $result;
 	}

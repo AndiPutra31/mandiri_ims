@@ -24,8 +24,8 @@ class M_aset extends CI_Model{
 						'jenis_aset' 	=> 1,
 						'status_aset' 	=> $status,
 						'qty_aset' 		=> 0,
-						'created_date' 	=> $_SESSION['SESSION_USERID'],
-						'created_by' 	=> date("Y-m-d H:i:s") 				
+						'created_by' 	=> $_SESSION['SESSION_USERID'],
+						'created_date' 	=> date("Y-m-d H:i:s") 				
 					);
 				$flag = 1;
 				$this->db->insert('m_aset', $param);
@@ -58,8 +58,8 @@ class M_aset extends CI_Model{
 						// 'jenis_aset' 		=> $jenis_aset,
 						'jenis_aset' 		=> 1,
 						'status_aset' 		=> $status,
-						'last_update_date' 	=> $_SESSION['SESSION_USERID'],
-						'last_update_by' 	=> date("Y-m-d H:i:s") 				
+						'last_update_by' 	=> $_SESSION['SESSION_USERID'],
+						'last_update_date' 	=> date("Y-m-d H:i:s") 				
 					);
 			$this->db->set($param);
 			$this->db->where('aset_id', $aset_id);
@@ -180,7 +180,7 @@ class M_aset extends CI_Model{
 		$this->db->where('status_aset', '1');
 		$get = $this->db->get();
 		$result = $get->row();
-		echo $result->qty_aset;
+		// echo $result->qty_aset;
 		if(is_null($result))
 		{
 			$qty = 0;
