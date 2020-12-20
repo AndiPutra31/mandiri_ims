@@ -170,6 +170,19 @@ class M_user extends CI_Model{
 		return $this->db->count_all_results();
 	}
 
+	public function reset()
+	{
+		$this->db->empty_table('t_aset_keluar');
+		$this->db->empty_table('t_aset_masuk');
+		$this->db->empty_table('t_report');
+		// $this->db->empty_table('m_jenis_aset');
+		$this->db->empty_table('m_aset_hist');
+		$this->db->empty_table('m_aset');
+		$this->db->query("Delete from m_user WHERE user_name <> 'admin'");
+		$result = "ok";
+		return $result;
+	}
+
 }
 
 ?>

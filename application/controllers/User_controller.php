@@ -105,6 +105,16 @@ class User_controller extends CI_Controller {
 		echo json_encode($result);
 
 	}
+
+	public function reset()
+	{
+		$result = $this->m_user->reset();
+		var_dump($result);
+		if ($result == "ok") {
+			$this->logout();
+		}
+		echo json_encode($result);
+	}
 		
 	
 }

@@ -22,6 +22,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <i class="fas fa-bolt"></i> Activities
               </a> -->
               <div class="dropdown-divider"></div>
+              <?php if ($_SESSION['SESSION_USERNAME']=='admin') {?>
+              <a href="<?php echo base_url() ?>/user_controller/reset" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-power-off"></i> Reset
+              <?php } ?>
+              </a>
               <a href="<?php echo base_url() ?>/user_controller/logout" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
               </a>
